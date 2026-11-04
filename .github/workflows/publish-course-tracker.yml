@@ -38,4 +38,4 @@ jobs:
           echo "Repository: $GITHUB_REPOSITORY" >> "$GITHUB_STEP_SUMMARY"
           echo "Issues: https://github.com/$GITHUB_REPOSITORY/issues" >> "$GITHUB_STEP_SUMMARY"
 
-# Re-run when this workflow changes; issue publication is idempotent.
+# Re-run when this workflow changes; syncs phase milestones on all 133 issues.
