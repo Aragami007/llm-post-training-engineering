@@ -1,0 +1,27 @@
+name: Learning question / blocker
+description: Ask a targeted conceptual or implementation question while studying
+labels: [kind:concept]
+body:
+  - type: textarea
+    id: topic
+    attributes:
+      label: Related topic ID and phase
+      placeholder: P02-06 / QLoRA memory path
+    validations:
+      required: true
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What I already tried or derived
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Exact question, hypothesis, or blocker
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and minimal reproducible example (no secrets)
