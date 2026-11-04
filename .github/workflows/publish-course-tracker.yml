@@ -1,0 +1,39 @@
+name: Publish course learning tracker
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/publish-course-tracker.yml'
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: course-issue-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'Aragami007/llm-post-training-engineering'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate course manifest and issue definitions
+        run: python3 scripts/validate_course.py
+      - name: Verify GitHub CLI available
+        run: gh --version
+      - name: Publish missing phase labels, milestones and learning issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: python3 scripts/publish_issues.py --repo "$GITHUB_REPOSITORY" --apply --delay 1.0
+      - name: Summarize tracker
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "### Learning tracker" >> "$GITHUB_STEP_SUMMARY"
+          echo "Repository: $GITHUB_REPOSITORY" >> "$GITHUB_STEP_SUMMARY"
+          echo "Issues: https://github.com/$GITHUB_REPOSITORY/issues" >> "$GITHUB_STEP_SUMMARY"
