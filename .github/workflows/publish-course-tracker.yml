@@ -37,3 +37,5 @@ jobs:
           echo "### Learning tracker" >> "$GITHUB_STEP_SUMMARY"
           echo "Repository: $GITHUB_REPOSITORY" >> "$GITHUB_STEP_SUMMARY"
           echo "Issues: https://github.com/$GITHUB_REPOSITORY/issues" >> "$GITHUB_STEP_SUMMARY"
+
+# Re-run when this workflow changes; issue publication is idempotent.
