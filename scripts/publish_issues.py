@@ -46,15 +46,16 @@ def preflight(repo):
     if not shutil.which('gh'):
         raise RuntimeError('GitHub CLI (gh) is not installed. See docs/GITHUB_PUBLISHING.md.')
     cmd(['gh','auth','status'])
+    if os.environ.get('GITHUB_ACTIONS') == 'true':
+        if os.environ.get('GITHUB_REPOSITORY','').casefold() != repo.casefold():
+            raise RuntimeError('GitHub Actions publishing is allowed only to the current repository.')
+        cmd(['gh','repo','view',repo,'--json','nameWithOwner'])
+        return
     active = cmd(['gh','api','user','--jq','.login']).strip()
     owner = repo.split('/', 1)[0]
-    actions_bot = (os.environ.get('GITHUB_ACTIONS') == 'true' and
-                   os.environ.get('GITHUB_REPOSITORY','').casefold() == repo.casefold() and
-                   active.casefold() in ('github-actions[bot]', 'github-actions'))
-    if active.casefold() != owner.casefold() and not actions_bot:
+    if active.casefold() != owner.casefold():
         raise RuntimeError(f"Authenticated GitHub login {active!r} does not match requested repo owner {owner!r}. Switch accounts before publishing.")
     cmd(['gh','repo','view',repo,'--json','nameWithOwner'])
-
 
 def existing_issues(repo):
     rows = gh_json(['issue','list','--repo',repo,'--state','all','--limit','1000','--json','number,title,body,state,url'])
