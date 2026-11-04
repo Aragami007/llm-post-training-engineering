@@ -6,6 +6,7 @@ planning is the DEFAULT. `--apply` creates missing resources. Uses an invisible
 stable marker to identify already-created issues and avoid duplicates on reruns.
 """
 import argparse
+import os
 import json
 import re
 import shutil
@@ -47,7 +48,10 @@ def preflight(repo):
     cmd(['gh','auth','status'])
     active = cmd(['gh','api','user','--jq','.login']).strip()
     owner = repo.split('/', 1)[0]
-    if active.casefold() != owner.casefold():
+    actions_bot = (os.environ.get('GITHUB_ACTIONS') == 'true' and
+                   os.environ.get('GITHUB_REPOSITORY','').casefold() == repo.casefold() and
+                   active.casefold() in ('github-actions[bot]', 'github-actions'))
+    if active.casefold() != owner.casefold() and not actions_bot:
         raise RuntimeError(f"Authenticated GitHub login {active!r} does not match requested repo owner {owner!r}. Switch accounts before publishing.")
     cmd(['gh','repo','view',repo,'--json','nameWithOwner'])
 
