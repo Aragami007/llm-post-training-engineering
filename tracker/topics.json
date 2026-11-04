@@ -1,0 +1,5948 @@
+{
+  "schema_version": 1,
+  "syllabus_version": "2.0",
+  "default_visibility": "private",
+  "phases": [
+    {
+      "id": 0,
+      "code": "P00",
+      "title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "goal": "Reproducible local environment, baseline training smoke test and verified resume",
+      "gate_artifact": "environment.md and run manifest",
+      "gate_id": "P00-09",
+      "issue_count": 9,
+      "milestone": "Phase 00 — Environment and reproducibility"
+    },
+    {
+      "id": 1,
+      "code": "P01",
+      "title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "goal": "Correct mini decoder, measured precision and attention behavior",
+      "gate_artifact": "mini-transformer and numerical report",
+      "gate_id": "P01-12",
+      "issue_count": 12,
+      "milestone": "Phase 01 — Transformers, optimization and GPU primitives"
+    },
+    {
+      "id": 2,
+      "code": "P02",
+      "title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "goal": "Correct scratch LoRA and measured GPU budgets",
+      "gate_artifact": "adapter tests and memory profiling report",
+      "gate_id": "P02-11",
+      "issue_count": 11,
+      "milestone": "Phase 02 — LoRA, QLoRA and memory accounting"
+    },
+    {
+      "id": 3,
+      "code": "P03",
+      "title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "goal": "Frozen evaluator and baseline B0 with trustworthy metrics",
+      "gate_artifact": "eval_spec.md and baseline_report.md",
+      "gate_id": "P03-12",
+      "issue_count": 12,
+      "milestone": "Phase 03 — Task framing and evaluation before tuning"
+    },
+    {
+      "id": 4,
+      "code": "P04",
+      "title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "goal": "Audited supervised dataset with provenance and no leakage",
+      "gate_artifact": "dataset card and data_audit.json",
+      "gate_id": "P04-12",
+      "issue_count": 12,
+      "milestone": "Phase 04 — Dataset creation and curation"
+    },
+    {
+      "id": 5,
+      "code": "P05",
+      "title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "goal": "Reproducible B1 with fair ablation comparisons",
+      "gate_artifact": "SFT training code and ablation report",
+      "gate_id": "P05-11",
+      "issue_count": 11,
+      "milestone": "Phase 05 — Supervised fine-tuning and ablations"
+    },
+    {
+      "id": 6,
+      "code": "P06",
+      "title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "goal": "Fault injections and measured root-cause investigations",
+      "gate_artifact": "training_diagnostics.md",
+      "gate_id": "P06-10",
+      "issue_count": 10,
+      "milestone": "Phase 06 — Training diagnostics and interpretation"
+    },
+    {
+      "id": 7,
+      "code": "P07",
+      "title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "goal": "Scratch DPO, preference-quality audit and independent B2 evaluation",
+      "gate_artifact": "preference_eval.md",
+      "gate_id": "P07-13",
+      "issue_count": 13,
+      "milestone": "Phase 07 — Reward modeling and offline preferences"
+    },
+    {
+      "id": 8,
+      "code": "P08",
+      "title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "goal": "Small B3 RL experiment and reward-hacking control",
+      "gate_artifact": "online_rl_report.md",
+      "gate_id": "P08-12",
+      "issue_count": 12,
+      "milestone": "Phase 08 — Online RL and verifiable rewards"
+    },
+    {
+      "id": 9,
+      "code": "P09",
+      "title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "goal": "Correct collectives/sharding model with honest hardware claims",
+      "gate_artifact": "distributed_systems_report.md",
+      "gate_id": "P09-11",
+      "issue_count": 11,
+      "milestone": "Phase 09 — Distributed training systems"
+    },
+    {
+      "id": 10,
+      "code": "P10",
+      "title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "goal": "Working inference API and quantified serving tradeoffs",
+      "gate_artifact": "serving_report.md",
+      "gate_id": "P10-10",
+      "issue_count": 10,
+      "milestone": "Phase 10 — Serving, artifact engineering and observability"
+    },
+    {
+      "id": 11,
+      "code": "P11",
+      "title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "goal": "Reproducible B0–B3 comparative system and research report",
+      "gate_artifact": "REPORT.md and portfolio index",
+      "gate_id": "P11-10",
+      "issue_count": 10,
+      "milestone": "Phase 11 — Capstone and research portfolio"
+    }
+  ],
+  "topics": [
+    {
+      "id": "P00-01",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Map the post-training lifecycle",
+      "concepts": [
+        "Differentiate base pretraining",
+        "CPT/DAPT",
+        "SFT",
+        "offline preference tuning",
+        "learned rewards",
+        "and online RL"
+      ],
+      "tasks": [
+        "Diagram the lifecycle with data, models, objectives and outputs",
+        "Explain why an instruct checkpoint differs from a base checkpoint"
+      ],
+      "evidence": [
+        "docs/notes/P00-post-training-map.md"
+      ],
+      "acceptance": "Map names all six stages and correctly identifies where B0, B1, B2 and B3 originate",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "P00-02",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Establish Linux/Python/Git development environment",
+      "concepts": [
+        "Python environments",
+        "Git identities",
+        "CUDA-enabled PyTorch",
+        "pinned dependency sets"
+      ],
+      "tasks": [
+        "Record OS/Python/Git versions",
+        "Create project virtual environment and run import smoke test",
+        "Save lockfile and reproduction command"
+      ],
+      "evidence": [
+        "experiments/P00/environment.md"
+      ],
+      "acceptance": "Environment recreated from recorded commands without undocumented manual steps",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P00-01"
+      ]
+    },
+    {
+      "id": "P00-03",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 3,
+      "kind": "lab",
+      "optional": false,
+      "title": "Inventory RTX 4060 and storage",
+      "concepts": [
+        "GPU compute capability",
+        "total/free VRAM",
+        "CUDA driver",
+        "BF16 support",
+        "NVMe and external SSD"
+      ],
+      "tasks": [
+        "Collect nvidia-smi, torch.cuda device data, torch.cuda.is_bf16_supported and disk stats",
+        "Redact serial numbers and other unnecessary machine identifiers"
+      ],
+      "evidence": [
+        "experiments/P00/hardware_inventory.md"
+      ],
+      "acceptance": "Records measured capacity, precision support, free disk, and the difference between reported and usable VRAM",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P00-02"
+      ]
+    },
+    {
+      "id": "P00-04",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 4,
+      "kind": "concept",
+      "optional": false,
+      "title": "Check model cards, dataset cards and licenses",
+      "concepts": [
+        "Base versus instruct checkpoints",
+        "model revision",
+        "license terms",
+        "dataset rights and safety limitations"
+      ],
+      "tasks": [
+        "Inspect two candidate small models",
+        "Write a selection table with revision/license/architecture/tokenizer/expected storage and risk"
+      ],
+      "evidence": [
+        "docs/notes/P00-model-selection.md"
+      ],
+      "acceptance": "Selection explains why at least one model is suitable for reproducible text-only labs",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "P00-05",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 5,
+      "kind": "lab",
+      "optional": false,
+      "title": "Build versioned experiment configuration",
+      "concepts": [
+        "Configuration files",
+        "stable run identifiers",
+        "hyperparameters",
+        "code commit",
+        "data/model hashes and secret management"
+      ],
+      "tasks": [
+        "Create YAML/JSON experiment config",
+        "Define run naming and manifest schema",
+        "Keep keys and tokens outside version control"
+      ],
+      "evidence": [
+        "templates/run_config.json and experiments/P00/run_manifest.json"
+      ],
+      "acceptance": "Same config produces the same run identifier and secrets are not checked in",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P00-04"
+      ]
+    },
+    {
+      "id": "P00-06",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 6,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Characterize deterministic vs nondeterministic execution",
+      "concepts": [
+        "Seeds",
+        "CUDA non-determinism",
+        "kernels",
+        "data order and precision"
+      ],
+      "tasks": [
+        "Repeat a tiny tensor experiment with fixed and changed seeds",
+        "Compare results and list nondeterministic sources"
+      ],
+      "evidence": [
+        "experiments/P00/reproducibility.md"
+      ],
+      "acceptance": "Includes actual repeated metrics and explicitly distinguishes stable from merely similar outputs",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P00-05"
+      ]
+    },
+    {
+      "id": "P00-07",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Run a tiny inference and backward pass",
+      "concepts": [
+        "Tokenization",
+        "forward loss",
+        "backward gradients and optimizer updates"
+      ],
+      "tasks": [
+        "Load a small model compatible with local memory",
+        "Run inference then 3–5 tiny gradient steps with synthetic tokens",
+        "Log loss and number of updated parameters"
+      ],
+      "evidence": [
+        "experiments/P00/smoke_train.py and logs"
+      ],
+      "acceptance": "Verifies nonzero finite gradients and records executed commands",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P00-06"
+      ]
+    },
+    {
+      "id": "P00-08",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 8,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement save-resume smoke test",
+      "concepts": [
+        "Checkpointing optimizer state",
+        "adapter/model weights",
+        "RNG and scheduler position"
+      ],
+      "tasks": [
+        "Save after a few steps",
+        "Reload and resume",
+        "Compare resumed next step against an uninterrupted control where feasible"
+      ],
+      "evidence": [
+        "experiments/P00/resume_test.md"
+      ],
+      "acceptance": "Report explains whether optimizer, scheduler and RNG state were preserved; mismatch is investigated",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P00-07"
+      ]
+    },
+    {
+      "id": "P00-09",
+      "phase": 0,
+      "phase_title": "Environment and reproducibility",
+      "weeks": "Week 1",
+      "number": 9,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 0 reproducibility review",
+      "concepts": [
+        "Environment gate",
+        "artifact traceability",
+        "assumptions and resource limits"
+      ],
+      "tasks": [
+        "Assemble environment record, license note and successful smoke logs",
+        "Ask a second person or fresh environment to follow setup",
+        "Record known limitations"
+      ],
+      "evidence": [
+        "docs/gates/phase-00.md"
+      ],
+      "acceptance": "Another person can locate model/data versions, launch command, hardware stats and baseline result",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch installation and compatibility",
+          "url": "https://pytorch.org/get-started/locally/"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P00-08"
+      ]
+    },
+    {
+      "id": "P01-01",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Causal language-model objective and teacher forcing",
+      "concepts": [
+        "Autoregressive factorization",
+        "next-token prediction",
+        "shifted labels",
+        "negative log likelihood"
+      ],
+      "tasks": [
+        "Derive p(x_1..x_T) and causal CE",
+        "Explain teacher forcing and inference-time exposure mismatch"
+      ],
+      "evidence": [
+        "docs/notes/P01-causal-objective.md"
+      ],
+      "acceptance": "Shapes and loss indexing are correct on an explicit four-token example",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09"
+      ]
+    },
+    {
+      "id": "P01-02",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 2,
+      "kind": "concept",
+      "optional": false,
+      "title": "Token embeddings, output heads and tokenization",
+      "concepts": [
+        "Token IDs",
+        "embedding tables",
+        "tied/untied LM heads",
+        "BPE and special tokens"
+      ],
+      "tasks": [
+        "Trace sample text to token IDs and embedding rows",
+        "Explain why tokenizer revisions affect evaluation"
+      ],
+      "evidence": [
+        "docs/notes/P01-embeddings.md"
+      ],
+      "acceptance": "Example includes vocab size, sequence shape and one correct logits calculation",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09"
+      ]
+    },
+    {
+      "id": "P01-03",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 3,
+      "kind": "concept",
+      "optional": false,
+      "title": "Positional representations and RoPE",
+      "concepts": [
+        "Relative position intuition",
+        "rotary embeddings",
+        "context lengths",
+        "implementation assumptions"
+      ],
+      "tasks": [
+        "Derive a small RoPE pair rotation",
+        "Compare position-dependent dot products before and after rotation"
+      ],
+      "evidence": [
+        "docs/notes/P01-rope.md"
+      ],
+      "acceptance": "Numerical example matches independent calculation and notes model-specific variants",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09"
+      ]
+    },
+    {
+      "id": "P01-04",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 4,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement masked scaled dot-product attention",
+      "concepts": [
+        "Q/K/V projections",
+        "scaling",
+        "softmax",
+        "causal masking",
+        "attention weights"
+      ],
+      "tasks": [
+        "Implement attention in bare PyTorch",
+        "Test known inputs and masks",
+        "Compare output against torch scaled_dot_product_attention"
+      ],
+      "evidence": [
+        "train/toy/attention.py and tests"
+      ],
+      "acceptance": "Forward outputs agree within declared tolerance and future tokens cannot affect past outputs",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09",
+        "P01-03"
+      ]
+    },
+    {
+      "id": "P01-05",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 5,
+      "kind": "concept",
+      "optional": false,
+      "title": "Multi-head attention, GQA and KV heads",
+      "concepts": [
+        "Head reshaping",
+        "MHA versus MQA/GQA",
+        "KV memory implications"
+      ],
+      "tasks": [
+        "Diagram tensor shapes for MHA and GQA",
+        "Compute KV-cache bytes for an example architecture"
+      ],
+      "evidence": [
+        "docs/notes/P01-attention-heads.md"
+      ],
+      "acceptance": "Derivation has correct heads/grouping and clearly states assumptions",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09"
+      ]
+    },
+    {
+      "id": "P01-06",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 6,
+      "kind": "concept",
+      "optional": false,
+      "title": "Residuals, LayerNorm/RMSNorm and MLP blocks",
+      "concepts": [
+        "Decoder block ordering",
+        "normalization variants",
+        "residual gradient paths",
+        "gated MLPs"
+      ],
+      "tasks": [
+        "Trace dataflow of one decoder block",
+        "Contrast layernorm with RMSNorm",
+        "Explain why residual paths aid optimization"
+      ],
+      "evidence": [
+        "docs/notes/P01-block-architecture.md"
+      ],
+      "acceptance": "Explicit tensor dimensions and normalization axes are correct",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09"
+      ]
+    },
+    {
+      "id": "P01-07",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Code a minimal decoder-only transformer",
+      "concepts": [
+        "Embedding",
+        "causal attention",
+        "residual blocks",
+        "normalization",
+        "logits",
+        "cross-entropy"
+      ],
+      "tasks": [
+        "Build a small decoder network",
+        "Run forward/backward and overfit a tiny toy dataset",
+        "Add parameter-count calculation"
+      ],
+      "evidence": [
+        "train/toy/mini_transformer.py and tests"
+      ],
+      "acceptance": "Loss falls on tiny dataset and all expected trainable parameters receive finite gradients",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09",
+        "P01-06"
+      ]
+    },
+    {
+      "id": "P01-08",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 8,
+      "kind": "concept",
+      "optional": false,
+      "title": "AdamW, schedulers and optimizer state",
+      "concepts": [
+        "First/second moments",
+        "decoupled weight decay",
+        "warmup",
+        "cosine and WSD"
+      ],
+      "tasks": [
+        "Derive one AdamW parameter step",
+        "Calculate optimizer moment memory separately from weights/grads",
+        "Plot or tabulate schedule values"
+      ],
+      "evidence": [
+        "docs/notes/P01-optimizers.md"
+      ],
+      "acceptance": "Correct step arithmetic and explains why AdamW moment bytes are not total model-training bytes",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09"
+      ]
+    },
+    {
+      "id": "P01-09",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 9,
+      "kind": "lab",
+      "optional": false,
+      "title": "Gradient accumulation, clipping and true batch size",
+      "concepts": [
+        "Effective batch",
+        "accumulation denominator",
+        "synchronization and norm clipping"
+      ],
+      "tasks": [
+        "Compare equivalent accumulated and nonaccumulated updates on toy model",
+        "Apply clipping to constructed large gradients"
+      ],
+      "evidence": [
+        "train/toy/gradient_tests.py"
+      ],
+      "acceptance": "Parameter deltas match within tolerance and clipping effect is demonstrated",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09",
+        "P01-08"
+      ]
+    },
+    {
+      "id": "P01-10",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 10,
+      "kind": "experiment",
+      "optional": false,
+      "title": "FP32, FP16, BF16 and numerical stability",
+      "concepts": [
+        "Exponent",
+        "mantissa",
+        "overflow/underflow",
+        "BF16 device support and loss scaling"
+      ],
+      "tasks": [
+        "Construct controlled low/high magnitude operations",
+        "Compare formats and discuss stable fallback",
+        "Record actual GPU capability"
+      ],
+      "evidence": [
+        "experiments/P01/precision_report.md"
+      ],
+      "acceptance": "Reports precision, range, measured divergence and avoids claiming BF16 prevents all instability",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09",
+        "P01-09"
+      ]
+    },
+    {
+      "id": "P01-11",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 11,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Fused SDPA, FlashAttention and sequence scaling",
+      "concepts": [
+        "O(N²) full attention arithmetic",
+        "intermediate memory",
+        "kernels and IO tiling"
+      ],
+      "tasks": [
+        "Sweep sequence lengths in manual attention and supported SDPA backend",
+        "Record peak allocated memory and runtime",
+        "Explain backend detection"
+      ],
+      "evidence": [
+        "experiments/P01/attention_benchmark.md"
+      ],
+      "acceptance": "Distinguishes quadratic compute from attention-intermediate memory; names actual backend used",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09",
+        "P01-10"
+      ]
+    },
+    {
+      "id": "P01-12",
+      "phase": 1,
+      "phase_title": "Transformers, optimization and GPU primitives",
+      "weeks": "Weeks 2–3",
+      "number": 12,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 1 correctness and derivation gate",
+      "concepts": [
+        "Tensor shapes",
+        "gradients",
+        "attention masks and numerical evidence"
+      ],
+      "tasks": [
+        "Run toy transformer and attention unit tests",
+        "Summarize equations and numerical precision findings",
+        "Record failing cases"
+      ],
+      "evidence": [
+        "docs/gates/phase-01.md"
+      ],
+      "acceptance": "Mini decoder trains and math/test evidence is reproducible",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Attention Is All You Need",
+          "url": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "label": "PyTorch scaled-dot-product attention",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html"
+        },
+        {
+          "label": "FlashAttention paper",
+          "url": "https://arxiv.org/abs/2205.14135"
+        }
+      ],
+      "prerequisites": [
+        "P00-09",
+        "P01-11"
+      ]
+    },
+    {
+      "id": "P02-01",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "LoRA low-rank update derivation",
+      "concepts": [
+        "W0 + alpha/r BA",
+        "shape constraints",
+        "degrees of freedom and empirical rank hypothesis"
+      ],
+      "tasks": [
+        "Derive trainable parameter formula for one linear layer",
+        "Calculate ratios for two ranks and target-module choices"
+      ],
+      "evidence": [
+        "docs/notes/P02-lora-math.md"
+      ],
+      "acceptance": "Shapes and parameter calculations are checked against code; no universal savings percentage asserted",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12"
+      ]
+    },
+    {
+      "id": "P02-02",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Build LoRA for nn.Linear from scratch",
+      "concepts": [
+        "Frozen base weight",
+        "adapter A/B",
+        "zero-update initialization and scaling"
+      ],
+      "tasks": [
+        "Implement LoRALinear wrapper",
+        "Match base output at initialization",
+        "Verify only intended adapter tensors train"
+      ],
+      "evidence": [
+        "train/peft/lora_scratch.py and tests"
+      ],
+      "acceptance": "Exact/near-exact initial equivalence and expected trainable tensor names verified",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12",
+        "P02-01"
+      ]
+    },
+    {
+      "id": "P02-03",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 3,
+      "kind": "lab",
+      "optional": false,
+      "title": "Test LoRA gradients, save/load and merge",
+      "concepts": [
+        "Backpropagated adapter gradients",
+        "finite difference",
+        "state dict and demerge assumptions"
+      ],
+      "tasks": [
+        "Finite-difference check one adapter gradient",
+        "Save/load adapter and compare logits",
+        "Merge in floating precision and compare"
+      ],
+      "evidence": [
+        "train/peft/test_lora.py"
+      ],
+      "acceptance": "Gradient check and round-trip outputs meet declared tolerances",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12",
+        "P02-02"
+      ]
+    },
+    {
+      "id": "P02-04",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 4,
+      "kind": "concept",
+      "optional": false,
+      "title": "Compare LoRA module coverage and rank/alpha",
+      "concepts": [
+        "Attention projections vs MLP/all-linear",
+        "alpha/r",
+        "dropout",
+        "rsLoRA/DoRA"
+      ],
+      "tasks": [
+        "Map actual target module names on selected model",
+        "Compute adapter counts for chosen r/alpha settings"
+      ],
+      "evidence": [
+        "experiments/P02/target_module_map.md"
+      ],
+      "acceptance": "Valid architecture-specific module inventory and measured parameter counts",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12"
+      ]
+    },
+    {
+      "id": "P02-05",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 5,
+      "kind": "concept",
+      "optional": false,
+      "title": "Weight quantization and NF4",
+      "concepts": [
+        "Quantization ranges",
+        "4-bit NormalFloat",
+        "block scaling",
+        "quant error",
+        "double quantization"
+      ],
+      "tasks": [
+        "Work small block quantize/dequantize example",
+        "Explain why effective bits/parameter exceed ideal 4-bit weight-only bound"
+      ],
+      "evidence": [
+        "docs/notes/P02-nf4.md"
+      ],
+      "acceptance": "Includes numeric reconstruction/error and metadata assumptions",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12"
+      ]
+    },
+    {
+      "id": "P02-06",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 6,
+      "kind": "concept",
+      "optional": false,
+      "title": "QLoRA optimizer and backward memory path",
+      "concepts": [
+        "Frozen quantized weights",
+        "compute dtype",
+        "LoRA grads",
+        "paged optimizers and checkpoint tradeoffs"
+      ],
+      "tasks": [
+        "Draw forward/backward and memory-state diagram",
+        "Contrast QLoRA with full fine-tuning and 8-bit optimizer"
+      ],
+      "evidence": [
+        "docs/notes/P02-qlora-memory.md"
+      ],
+      "acceptance": "Differentiates storage, compute dtype, temporary dequantization and trainable states",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12"
+      ]
+    },
+    {
+      "id": "P02-07",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement truthful CUDA memory probe",
+      "concepts": [
+        "torch allocated/reserved/peaks",
+        "nvidia-smi totals",
+        "context overhead and fragmentation"
+      ],
+      "tasks": [
+        "Instrument forward, backward, step and reset_peak_memory_stats",
+        "Capture batch and sequence sizes",
+        "Save machine-readable logs"
+      ],
+      "evidence": [
+        "scripts/gpu_memory_probe.py and experiments/P02/memory_raw.json"
+      ],
+      "acceptance": "Logs measured quantities with units and OOM/no-GPU graceful handling",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12",
+        "P02-06"
+      ]
+    },
+    {
+      "id": "P02-08",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 8,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Sweep batch, context, checkpointing and precision",
+      "concepts": [
+        "Activation growth",
+        "gradient checkpoint compute tradeoff",
+        "peak allocation"
+      ],
+      "tasks": [
+        "Run controlled sweep over B,N, precision and checkpoint toggle",
+        "Track tokens/sec and wall time",
+        "Compare estimated and measured peak"
+      ],
+      "evidence": [
+        "experiments/P02/memory_sweep.md"
+      ],
+      "acceptance": "Report identifies at least two mismatches between theoretical bounds and measured device usage",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12",
+        "P02-07"
+      ]
+    },
+    {
+      "id": "P02-09",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 9,
+      "kind": "experiment",
+      "optional": false,
+      "title": "LoRA vs QLoRA comparison on 1–3B",
+      "concepts": [
+        "Memory",
+        "throughput",
+        "loss and quality under matched token budgets"
+      ],
+      "tasks": [
+        "Pilot same model and task with LoRA and QLoRA",
+        "Hold evaluated tokens/context constant",
+        "Compare GPU and metric costs"
+      ],
+      "evidence": [
+        "experiments/P02/lora_qlora_comparison.md"
+      ],
+      "acceptance": "Includes both quality and systems metrics with exact revisions and token counts",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12",
+        "P02-08"
+      ]
+    },
+    {
+      "id": "P02-10",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 10,
+      "kind": "stretch",
+      "optional": true,
+      "title": "Stretch: 7–8B short-context QLoRA pilot",
+      "concepts": [
+        "Practical OOM fallbacks",
+        "quantization overhead",
+        "runtime budget and cloud alternative"
+      ],
+      "tasks": [
+        "Prepare resource gate and backup 3B run",
+        "Attempt only if memory probe predicts headroom",
+        "Record whether success or honest OOM diagnosis"
+      ],
+      "evidence": [
+        "experiments/P02/stretch_8b.md"
+      ],
+      "acceptance": "Clear outcome and no claim of required 8B local training",
+      "estimated_hours": 5.0,
+      "resource": "cloud-conditional",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12"
+      ]
+    },
+    {
+      "id": "P02-11",
+      "phase": 2,
+      "phase_title": "LoRA, QLoRA and memory accounting",
+      "weeks": "Weeks 4–5",
+      "number": 11,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 2 adapter and memory gate",
+      "concepts": [
+        "Correct scratch implementation and evidence-backed budgets"
+      ],
+      "tasks": [
+        "Run adapter unit tests",
+        "Publish memory sweep and compare model sizes",
+        "Write one-page findings"
+      ],
+      "evidence": [
+        "docs/gates/phase-02.md"
+      ],
+      "acceptance": "Scratch adapter passes tests and theory vs measured VRAM discrepancy is explained",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LoRA paper",
+          "url": "https://arxiv.org/abs/2106.09685"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        },
+        {
+          "label": "PyTorch CUDA memory statistics",
+          "url": "https://docs.pytorch.org/docs/stable/generated/torch.cuda.memory.memory_stats.html"
+        },
+        {
+          "label": "PEFT quantization guide",
+          "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+        }
+      ],
+      "prerequisites": [
+        "P01-12",
+        "P02-10"
+      ]
+    },
+    {
+      "id": "P03-01",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Choose prompting, RAG, CPT, SFT or RL",
+      "concepts": [
+        "Retrieval vs memorization",
+        "knowledge vs behavior",
+        "data volume",
+        "verifiability and operational risk"
+      ],
+      "tasks": [
+        "Build task-to-technique decision tree",
+        "Justify why fine-tuning may not be best first intervention"
+      ],
+      "evidence": [
+        "docs/DECISION_TREE.md"
+      ],
+      "acceptance": "Includes at least three scenarios where fine-tuning is not first choice",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11"
+      ]
+    },
+    {
+      "id": "P03-02",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Specify one bounded course evaluation task",
+      "concepts": [
+        "Task input/outputs",
+        "unacceptable behavior",
+        "users",
+        "resources and assumptions"
+      ],
+      "tasks": [
+        "Select structured tool calling, code changes, or verifiable math",
+        "Write target behavior and examples including abstention"
+      ],
+      "evidence": [
+        "eval/eval_spec.md"
+      ],
+      "acceptance": "Scope is objectively measurable, with clear success and failure definitions",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-01"
+      ]
+    },
+    {
+      "id": "P03-03",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 3,
+      "kind": "concept",
+      "optional": false,
+      "title": "Construct a task failure taxonomy",
+      "concepts": [
+        "Hallucination",
+        "wrong tool",
+        "invalid schema",
+        "unsafe action",
+        "missing evidence and partial correctness"
+      ],
+      "tasks": [
+        "Categorize 20 sample failures",
+        "Define error labels and adjudication rules"
+      ],
+      "evidence": [
+        "eval/failure_taxonomy.md"
+      ],
+      "acceptance": "Two reviewers could apply labels consistently using definitions",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11"
+      ]
+    },
+    {
+      "id": "P03-04",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 4,
+      "kind": "lab",
+      "optional": false,
+      "title": "Build independent train/dev/test partitions",
+      "concepts": [
+        "Frozen held-out test",
+        "validation/dev",
+        "train pool",
+        "versioning and checksums"
+      ],
+      "tasks": [
+        "Prepare 150–300 held-out examples when feasible",
+        "Store stable IDs and hashes",
+        "Ensure test never enters training or teacher prompts"
+      ],
+      "evidence": [
+        "eval/splits_manifest.json"
+      ],
+      "acceptance": "Splits disjoint by ID and freeze checksum can be reproduced",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-03"
+      ]
+    },
+    {
+      "id": "P03-05",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 5,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Audit exact/semantic data leakage",
+      "concepts": [
+        "MinHash",
+        "near duplicates",
+        "paraphrase leakage",
+        "model generation contamination"
+      ],
+      "tasks": [
+        "Check exact hashes and text similarity across splits",
+        "Manually inspect near-match sample",
+        "Record removals"
+      ],
+      "evidence": [
+        "eval/leakage_report.md"
+      ],
+      "acceptance": "No unresolved high-risk overlap and caveats documented",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-04"
+      ]
+    },
+    {
+      "id": "P03-06",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 6,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement deterministic task grading",
+      "concepts": [
+        "Exact match",
+        "JSON schema",
+        "unit tests",
+        "verifiers and selective abstention scoring"
+      ],
+      "tasks": [
+        "Write eval.py with multiple grader cases",
+        "Unit-test invalid JSON and false-positive responses"
+      ],
+      "evidence": [
+        "eval/eval.py and eval/tests"
+      ],
+      "acceptance": "At least five adversarial grader tests pass and scoring is deterministic",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-05"
+      ]
+    },
+    {
+      "id": "P03-07",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 7,
+      "kind": "concept",
+      "optional": false,
+      "title": "Design an unbiased pairwise judge rubric",
+      "concepts": [
+        "Blind A/B scoring",
+        "rubric",
+        "position bias",
+        "self-judging",
+        "verbosity/length effects"
+      ],
+      "tasks": [
+        "Write criterion-weighted rubric",
+        "Randomize response order",
+        "Define tie rule and abstention conditions"
+      ],
+      "evidence": [
+        "eval/judge_rubric.md"
+      ],
+      "acceptance": "Identical outputs in swapped order cannot gain from positional labels in evaluation protocol",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11"
+      ]
+    },
+    {
+      "id": "P03-08",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 8,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Calibrate judge scores against humans",
+      "concepts": [
+        "Annotation sampling",
+        "disagreements",
+        "gold subset",
+        "judge error rates"
+      ],
+      "tasks": [
+        "Manually rate a blind sample",
+        "Compare judge-human agreement and discuss reliability",
+        "Exclude conflicted uncertain labels"
+      ],
+      "evidence": [
+        "eval/human_calibration.md"
+      ],
+      "acceptance": "Reports sample count, disagreement, examples and mitigation",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-07"
+      ]
+    },
+    {
+      "id": "P03-09",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 9,
+      "kind": "concept",
+      "optional": false,
+      "title": "Paired experiment design and uncertainty",
+      "concepts": [
+        "Confidence intervals",
+        "paired tests",
+        "slice stratification",
+        "stochastic decoding controls"
+      ],
+      "tasks": [
+        "Specify per-item paired results and an uncertainty method",
+        "Document sample limitations and multiple comparisons"
+      ],
+      "evidence": [
+        "eval/statistical_protocol.md"
+      ],
+      "acceptance": "Comparison design accounts for paired responses and reports uncertainty honestly",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11"
+      ]
+    },
+    {
+      "id": "P03-10",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 10,
+      "kind": "lab",
+      "optional": false,
+      "title": "Add selected general-regression and safety tests",
+      "concepts": [
+        "Regression slices",
+        "unsupported assertions",
+        "refusal and action safety"
+      ],
+      "tasks": [
+        "Define representative checks relevant to task",
+        "Create small regression corpus and failure reasons"
+      ],
+      "evidence": [
+        "eval/regression_suite.jsonl"
+      ],
+      "acceptance": "Tests are separate from primary target set and include both errors of commission and omission",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-09"
+      ]
+    },
+    {
+      "id": "P03-11",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 11,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Run and document B0 prompt-only baseline",
+      "concepts": [
+        "Instruct-model checkpoint",
+        "fixed chat template",
+        "decoding",
+        "constrained decoding and optional RAG"
+      ],
+      "tasks": [
+        "Execute frozen evaluation with untrained instruct model",
+        "Log prompt/version, metrics, failures and cost"
+      ],
+      "evidence": [
+        "eval/baseline_report.md"
+      ],
+      "acceptance": "B0 is measured before training with reproducible eval config and slice-level counts",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-10"
+      ]
+    },
+    {
+      "id": "P03-12",
+      "phase": 3,
+      "phase_title": "Task framing and evaluation before tuning",
+      "weeks": "Weeks 6–7",
+      "number": 12,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 3 freeze-before-training gate",
+      "concepts": [
+        "Immutable held-out data",
+        "runnable evaluator",
+        "baseline and artifact hashes"
+      ],
+      "tasks": [
+        "Freeze test hashes",
+        "Run eval from clean checkout",
+        "Approve task spec and benchmark definition"
+      ],
+      "evidence": [
+        "docs/gates/phase-03.md"
+      ],
+      "acceptance": "eval_spec, baseline report, independent splits and executable scorer exist before dataset generation",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LM Evaluation Harness",
+          "url": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "label": "Hugging Face evaluation documentation",
+          "url": "https://huggingface.co/docs/evaluate/index"
+        }
+      ],
+      "prerequisites": [
+        "P02-11",
+        "P03-11"
+      ]
+    },
+    {
+      "id": "P04-01",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Understand dataset schemas and conversations",
+      "concepts": [
+        "Prompt-completion",
+        "instruction-response",
+        "conversational messages and assistant turns"
+      ],
+      "tasks": [
+        "Translate sample across three representations",
+        "Explain supervision differences and roles"
+      ],
+      "evidence": [
+        "docs/notes/P04-data-schemas.md"
+      ],
+      "acceptance": "Examples preserve role boundaries and intended loss target",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12"
+      ]
+    },
+    {
+      "id": "P04-02",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Apply the selected model's native chat template",
+      "concepts": [
+        "apply_chat_template",
+        "BOS/EOS/EOT",
+        "model-specific formatting and version pins"
+      ],
+      "tasks": [
+        "Print tokens for multi-turn example",
+        "Verify tokenizer and model revisions agree",
+        "Avoid blindly forcing ChatML"
+      ],
+      "evidence": [
+        "data/chat_template_test.py and logs"
+      ],
+      "acceptance": "Encoded multi-turn sample matches model documentation; no duplicate BOS/EOS",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-01"
+      ]
+    },
+    {
+      "id": "P04-03",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 3,
+      "kind": "lab",
+      "optional": false,
+      "title": "Prove assistant-only and completion-only masks",
+      "concepts": [
+        "Labels -100",
+        "supervised token accounting",
+        "tool messages",
+        "system/user turns"
+      ],
+      "tasks": [
+        "Construct token-and-label visualizer",
+        "Test loss masks on 10 edge cases",
+        "Inspect denominator"
+      ],
+      "evidence": [
+        "data/masking_tests.py and report"
+      ],
+      "acceptance": "Only intended completion tokens contribute; special-token policy explicit",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-02"
+      ]
+    },
+    {
+      "id": "P04-04",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 4,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Validate packing, boundaries and truncation",
+      "concepts": [
+        "Packed examples",
+        "boundary leakage",
+        "attention crossing and answer truncation"
+      ],
+      "tasks": [
+        "Compare packed vs unpacked batches",
+        "Test cross-example token behavior",
+        "Find maximum length where target answer survives"
+      ],
+      "evidence": [
+        "data/packing_report.md"
+      ],
+      "acceptance": "No unnoticed answer truncation or unintended label contribution; attention assumptions documented",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-03"
+      ]
+    },
+    {
+      "id": "P04-05",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 5,
+      "kind": "concept",
+      "optional": false,
+      "title": "Establish data provenance and usage permissions",
+      "concepts": [
+        "Sources",
+        "licensing",
+        "terms",
+        "consent",
+        "generated content origin and audit trails"
+      ],
+      "tasks": [
+        "Build provenance schema",
+        "Record permissible source/teacher use and missing rights decisions"
+      ],
+      "evidence": [
+        "data/provenance_policy.md"
+      ],
+      "acceptance": "Each included example is traceable to allowed origin with source and version",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12"
+      ]
+    },
+    {
+      "id": "P04-06",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 6,
+      "kind": "lab",
+      "optional": false,
+      "title": "Redact privacy-sensitive data",
+      "concepts": [
+        "PII detection/redaction",
+        "false positives",
+        "retention",
+        "nonpublic data handling"
+      ],
+      "tasks": [
+        "Create safe synthetic PII examples",
+        "Run redaction checks and manual spot check",
+        "Write no-real-secrets policy"
+      ],
+      "evidence": [
+        "data/privacy_report.md"
+      ],
+      "acceptance": "No real private records committed and synthetic validation test passes",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-05"
+      ]
+    },
+    {
+      "id": "P04-07",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Curate first 300–500 verified examples",
+      "concepts": [
+        "Task stratification",
+        "edge cases",
+        "abstentions",
+        "ambiguity and answer correctness"
+      ],
+      "tasks": [
+        "Draft coverage targets",
+        "Curate and manually verify seed examples",
+        "Separate from eval set"
+      ],
+      "evidence": [
+        "data/dataset_v1_manifest.json"
+      ],
+      "acceptance": "Evidence of correct labels and explicit rationale for coverage design",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-06"
+      ]
+    },
+    {
+      "id": "P04-08",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 8,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Synthesize controlled additional training data",
+      "concepts": [
+        "Generator model/version",
+        "seed",
+        "prompt",
+        "sampling",
+        "temperature and validation"
+      ],
+      "tasks": [
+        "Generate samples for missing strata",
+        "Record teacher prompts/model versions and accepted/rejected IDs"
+      ],
+      "evidence": [
+        "data/generation_log.jsonl"
+      ],
+      "acceptance": "Can trace generated response to generator, instruction and acceptance decision",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-07"
+      ]
+    },
+    {
+      "id": "P04-09",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 9,
+      "kind": "lab",
+      "optional": false,
+      "title": "Deduplicate exact and semantic near duplicates",
+      "concepts": [
+        "Hashes",
+        "normalized text",
+        "MinHash and semantic judgment"
+      ],
+      "tasks": [
+        "Run dedup within training and across all splits",
+        "Document false-positive review"
+      ],
+      "evidence": [
+        "data/dedup_report.md"
+      ],
+      "acceptance": "Dedup results show counts, methods and manually reviewed ambiguous cases",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-08"
+      ]
+    },
+    {
+      "id": "P04-10",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 10,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Filter, reject-sample and audit data quality",
+      "concepts": [
+        "Heuristic filters",
+        "rubric graders",
+        "human verification",
+        "disagreement and dataset balance"
+      ],
+      "tasks": [
+        "Design acceptance/rejection criteria",
+        "Sample 100 items randomly for manual audit",
+        "Compute error rates by slice"
+      ],
+      "evidence": [
+        "data/data_audit.json"
+      ],
+      "acceptance": "Acceptance criteria explicit; audited sample IDs and outcomes archived",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-09"
+      ]
+    },
+    {
+      "id": "P04-11",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 11,
+      "kind": "concept",
+      "optional": false,
+      "title": "Build dataset card and token coverage report",
+      "concepts": [
+        "Dataset schema",
+        "limitations",
+        "license",
+        "token distribution",
+        "domain/difficulty/length"
+      ],
+      "tasks": [
+        "Produce dataset card and token histograms",
+        "Include known biases and held-out separation protocol"
+      ],
+      "evidence": [
+        "models_and_datasets/dataset_card.md"
+      ],
+      "acceptance": "Card documents origin, split hashes, limits and use restrictions",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12"
+      ]
+    },
+    {
+      "id": "P04-12",
+      "phase": 4,
+      "phase_title": "Dataset creation and curation",
+      "weeks": "Weeks 8–9",
+      "number": 12,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 4 dataset admission gate",
+      "concepts": [
+        "Provenance",
+        "masking",
+        "dedup",
+        "quality and task coverage"
+      ],
+      "tasks": [
+        "Execute data quality checks",
+        "Record failed checks and corrections",
+        "Approve SFT-ready revision"
+      ],
+      "evidence": [
+        "docs/gates/phase-04.md"
+      ],
+      "acceptance": "100-item manual audit, leakage check, template tests and dataset card complete",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "Transformers chat templating",
+          "url": "https://huggingface.co/docs/transformers/chat_templating"
+        },
+        {
+          "label": "TRL SFT trainer and masking",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "Hugging Face dataset cards",
+          "url": "https://huggingface.co/docs/hub/datasets-cards"
+        }
+      ],
+      "prerequisites": [
+        "P03-12",
+        "P04-11"
+      ]
+    },
+    {
+      "id": "P05-01",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Derive masked SFT objective and training budgets",
+      "concepts": [
+        "Token-level CE",
+        "mask normalization",
+        "tokens per epoch",
+        "sequence lengths and total token budget"
+      ],
+      "tasks": [
+        "Write loss equations for masked/packed examples",
+        "Estimate update count, effective batch and duration"
+      ],
+      "evidence": [
+        "docs/notes/P05-sft-objective.md"
+      ],
+      "acceptance": "Counts and denominators are consistent with real trainer configuration",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12"
+      ]
+    },
+    {
+      "id": "P05-02",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Train a transparent small SFT reference model",
+      "concepts": [
+        "Transformers/PyTorch training loop",
+        "validation",
+        "tokenizer revision and checkpoints"
+      ],
+      "tasks": [
+        "Train 0.5–1.5B instruct checkpoint with small task dataset",
+        "Record full config and eval under B0 protocol"
+      ],
+      "evidence": [
+        "train/sft/small_sft_run.md"
+      ],
+      "acceptance": "Run can be resumed and compared to untuned B0 with same evaluation",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-01"
+      ]
+    },
+    {
+      "id": "P05-03",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 3,
+      "kind": "lab",
+      "optional": false,
+      "title": "Train QLoRA/LoRA 1–3B B1 candidate",
+      "concepts": [
+        "PEFT configurations",
+        "gradient checkpointing",
+        "4-bit storage",
+        "activations and stability"
+      ],
+      "tasks": [
+        "Execute 1–3B adapter training",
+        "Save adapters and logs",
+        "Run held-out evaluator"
+      ],
+      "evidence": [
+        "train/sft/b1_run.md"
+      ],
+      "acceptance": "B1 generated with pinned base, dataset hash and frozen eval; results not cherry-picked",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-02"
+      ]
+    },
+    {
+      "id": "P05-04",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 4,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Compare attention-only versus all-linear LoRA",
+      "concepts": [
+        "Module targets",
+        "adapter capacity",
+        "memory and task gains"
+      ],
+      "tasks": [
+        "Hold data/tokens/seeds/decoding fixed",
+        "Report parameters, cost and B0-relative metrics"
+      ],
+      "evidence": [
+        "experiments/P05/module_ablation.md"
+      ],
+      "acceptance": "Fair matched comparison includes negative or null results",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-03"
+      ]
+    },
+    {
+      "id": "P05-05",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 5,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Compare LoRA rank and alpha configurations",
+      "concepts": [
+        "Rank capacity",
+        "scaling and effects of dropout"
+      ],
+      "tasks": [
+        "Sweep at least two ranks with documented alpha choices",
+        "Report variance or caveat of one-seed comparison"
+      ],
+      "evidence": [
+        "experiments/P05/rank_alpha.md"
+      ],
+      "acceptance": "No claim that any rank/alpha ratio always wins",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-04"
+      ]
+    },
+    {
+      "id": "P05-06",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 6,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Test learning rate and schedule sensitivity",
+      "concepts": [
+        "LR ranges",
+        "warmup",
+        "cosine/WSD",
+        "optimizer and early stopping"
+      ],
+      "tasks": [
+        "Compare two LR values and one schedule contrast when resources allow",
+        "Record steps, warmup and validation"
+      ],
+      "evidence": [
+        "experiments/P05/learning_rate.md"
+      ],
+      "acceptance": "Same token budget and evaluation protocol; identifies instability if present",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-05"
+      ]
+    },
+    {
+      "id": "P05-07",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 7,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Data quantity and synthetic-mixture ablation",
+      "concepts": [
+        "Verified seed vs scaled data",
+        "real-only vs mixed synthetic",
+        "distribution shifts"
+      ],
+      "tasks": [
+        "Compare two data volumes and real/synthetic proportions",
+        "Control test set and model config"
+      ],
+      "evidence": [
+        "experiments/P05/data_ablation.md"
+      ],
+      "acceptance": "Gains are separated from data count, and leakage remains absent",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-06"
+      ]
+    },
+    {
+      "id": "P05-08",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 8,
+      "kind": "concept",
+      "optional": false,
+      "title": "Interpret overfitting versus forgetting",
+      "concepts": [
+        "Task-specific gains",
+        "general capability losses",
+        "validation",
+        "safety and refusal behavior"
+      ],
+      "tasks": [
+        "Review B0/B1 sliced failures",
+        "Explain why a single benchmark does not prove no catastrophic forgetting"
+      ],
+      "evidence": [
+        "docs/notes/P05-regression-analysis.md"
+      ],
+      "acceptance": "Report includes at least one adverse slice even if net task score rises",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12"
+      ]
+    },
+    {
+      "id": "P05-09",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 9,
+      "kind": "lab",
+      "optional": false,
+      "title": "Capture checkpoints and resumable training",
+      "concepts": [
+        "Adapter file versions",
+        "optimizer/scheduler restore and cloud interruptions"
+      ],
+      "tasks": [
+        "Stop/resume a tiny checkpoint run",
+        "Retain only chosen snapshots and storage costs"
+      ],
+      "evidence": [
+        "train/sft/checkpoint_resume.md"
+      ],
+      "acceptance": "Post-resume log matches documented expectations with no silent reset",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-08"
+      ]
+    },
+    {
+      "id": "P05-10",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 10,
+      "kind": "stretch",
+      "optional": true,
+      "title": "Optional cloud scaling to 7–14B/27B",
+      "concepts": [
+        "Model cards",
+        "GPU fit",
+        "transfer limits",
+        "budget and uncertainty"
+      ],
+      "tasks": [
+        "Pilot 7–14B only after resource gate",
+        "For 27B, require separate approved feasibility budget",
+        "Record fallback"
+      ],
+      "evidence": [
+        "experiments/P05/cloud_scaling.md"
+      ],
+      "acceptance": "Actual model variant, VRAM, runtime, outcome and fallback documented; no cloud access guaranteed",
+      "estimated_hours": 5.0,
+      "resource": "cloud-conditional",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12"
+      ]
+    },
+    {
+      "id": "P05-11",
+      "phase": 5,
+      "phase_title": "Supervised fine-tuning and ablations",
+      "weeks": "Weeks 10–12",
+      "number": 11,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 5 B1 acceptance and ablation gate",
+      "concepts": [
+        "Blind held-out B0 comparison",
+        "matched controls",
+        "regression thresholds and limitations"
+      ],
+      "tasks": [
+        "Consolidate B1 and ablation table",
+        "Evaluate target gains and unacceptable regressions",
+        "Choose reproducible B1 checkpoint"
+      ],
+      "evidence": [
+        "docs/gates/phase-05.md"
+      ],
+      "acceptance": "B1 is honestly assessed; if it fails, evidence-based diagnosis substitutes for inflated success claim",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "TRL SFT trainer",
+          "url": "https://huggingface.co/docs/trl/sft_trainer"
+        },
+        {
+          "label": "PEFT LoRA configuration",
+          "url": "https://huggingface.co/docs/peft/package_reference/lora"
+        },
+        {
+          "label": "QLoRA paper",
+          "url": "https://arxiv.org/abs/2305.14314"
+        }
+      ],
+      "prerequisites": [
+        "P04-12",
+        "P05-10"
+      ]
+    },
+    {
+      "id": "P06-01",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Interpret loss/perplexity and masking denominators",
+      "concepts": [
+        "Train/validation CE",
+        "PPL comparability",
+        "tokens used and template interactions"
+      ],
+      "tasks": [
+        "Compute CE and PPL on toy tokens",
+        "Show invalid comparison when tokenizer/mask differs"
+      ],
+      "evidence": [
+        "docs/notes/P06-loss-telemetry.md"
+      ],
+      "acceptance": "Interpretation specifies compatible tokenizer, tokens and denominator",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11"
+      ]
+    },
+    {
+      "id": "P06-02",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 2,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Induce and diagnose overfitting safely",
+      "concepts": [
+        "Train-vs-dev divergence",
+        "data memorization and controlled interventions"
+      ],
+      "tasks": [
+        "Overfit tiny model on small dataset",
+        "Track held-out loss and accuracy",
+        "Test early stopping/data changes"
+      ],
+      "evidence": [
+        "experiments/P06/overfit.md"
+      ],
+      "acceptance": "Before/after curves and causal explanation linked to exact settings",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-01"
+      ]
+    },
+    {
+      "id": "P06-03",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 3,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Create and resolve gradient instability",
+      "concepts": [
+        "Grad norm spikes",
+        "loss scaling",
+        "LR",
+        "clipping and precision"
+      ],
+      "tasks": [
+        "Force a tiny high-LR instability",
+        "Record gradient norms and nonfinite values",
+        "Apply a measured fix"
+      ],
+      "evidence": [
+        "experiments/P06/grad_instability.md"
+      ],
+      "acceptance": "Reproduction and repair logs confirm measured improvement",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-02"
+      ]
+    },
+    {
+      "id": "P06-04",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 4,
+      "kind": "concept",
+      "optional": false,
+      "title": "Diagnose vanishing gradients and underfitting",
+      "concepts": [
+        "Gradient flow",
+        "incorrect masks",
+        "rank bottlenecks",
+        "scheduler and data quality"
+      ],
+      "tasks": [
+        "Construct troubleshooting flowchart",
+        "Collect per-layer gradient summary on toy run"
+      ],
+      "evidence": [
+        "docs/notes/P06/gradient_debugging.md"
+      ],
+      "acceptance": "Distinguishes symptoms from causes with checks to falsify competing hypotheses",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11"
+      ]
+    },
+    {
+      "id": "P06-05",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 5,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Compare several random seeds",
+      "concepts": [
+        "Sampling variance",
+        "initialization",
+        "small-sample CIs and selection bias"
+      ],
+      "tasks": [
+        "Repeat a feasible small controlled experiment three times",
+        "Report mean/spread and all seeds"
+      ],
+      "evidence": [
+        "experiments/P06/seed_variability.md"
+      ],
+      "acceptance": "No best-seed-only reporting; uncertainty is explicit",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-04"
+      ]
+    },
+    {
+      "id": "P06-06",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 6,
+      "kind": "lab",
+      "optional": false,
+      "title": "Monitor tokens/sec and GPU/CPU bottlenecks",
+      "concepts": [
+        "I/O waits",
+        "checkpoint overhead",
+        "data loader",
+        "allocated/reserved VRAM and wall clock"
+      ],
+      "tasks": [
+        "Instrument throughput and step time",
+        "Profile one pipeline bottleneck",
+        "Compare two configurations"
+      ],
+      "evidence": [
+        "experiments/P06/performance_profile.md"
+      ],
+      "acceptance": "Includes reproducible traces and a justified bottleneck hypothesis",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-05"
+      ]
+    },
+    {
+      "id": "P06-07",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Test checkpoint and resume failure paths",
+      "concepts": [
+        "Interrupted cloud runtime",
+        "optimizer states",
+        "dataset ordering and partial artifacts"
+      ],
+      "tasks": [
+        "Simulate interruption on toy run",
+        "Validate checkpoint integrity and resumed step",
+        "Document safe retention"
+      ],
+      "evidence": [
+        "train/sft/resilience_tests.md"
+      ],
+      "acceptance": "Resume does not silently restart and missing/corrupt checkpoint is handled",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-06"
+      ]
+    },
+    {
+      "id": "P06-08",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 8,
+      "kind": "lab",
+      "optional": false,
+      "title": "Build training configuration and data-integrity tests",
+      "concepts": [
+        "Tensor shapes",
+        "trainable param counts",
+        "tokenizer revision",
+        "masks and stale datasets"
+      ],
+      "tasks": [
+        "Add tests for model load, label masks, stable dataset checksum and adapter target names"
+      ],
+      "evidence": [
+        "tests/test_training_integrity.py"
+      ],
+      "acceptance": "Automated tests detect intentionally broken configs and fail clearly",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-07"
+      ]
+    },
+    {
+      "id": "P06-09",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 9,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Explain one unexpected metric with a controlled test",
+      "concepts": [
+        "Alternative hypotheses",
+        "confounds",
+        "single-factor changes and null results"
+      ],
+      "tasks": [
+        "Pick an unexplained metric swing",
+        "Propose three hypotheses",
+        "Run a discriminating test and state remaining uncertainty"
+      ],
+      "evidence": [
+        "experiments/P06/causal_debugging.md"
+      ],
+      "acceptance": "Claim supported by counterfactual/test rather than plotting alone",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-08"
+      ]
+    },
+    {
+      "id": "P06-10",
+      "phase": 6,
+      "phase_title": "Training diagnostics and interpretation",
+      "weeks": "Weeks 13–14",
+      "number": 10,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 6 diagnostics gate",
+      "concepts": [
+        "Evidence-backed debugging",
+        "resilience and telemetry"
+      ],
+      "tasks": [
+        "Consolidate fault injections, seed variability and performance notes",
+        "Record unresolved failure causes"
+      ],
+      "evidence": [
+        "docs/gates/phase-06.md"
+      ],
+      "acceptance": "Report demonstrates at least two reproduced pathologies with measured fixes",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch profiler",
+          "url": "https://docs.pytorch.org/docs/stable/profiler.html"
+        },
+        {
+          "label": "PyTorch reproducibility notes",
+          "url": "https://docs.pytorch.org/docs/stable/notes/randomness.html"
+        },
+        {
+          "label": "PyTorch CUDA memory tools",
+          "url": "https://docs.pytorch.org/docs/stable/torch_cuda_memory.html"
+        }
+      ],
+      "prerequisites": [
+        "P05-11",
+        "P06-09"
+      ]
+    },
+    {
+      "id": "P07-01",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Understand RLHF and preference pipeline",
+      "concepts": [
+        "SFT",
+        "comparison labels",
+        "reward modeling",
+        "reference policy",
+        "policy optimization and deployment"
+      ],
+      "tasks": [
+        "Diagram reward and policy pathways",
+        "List what each component learns and when it is used"
+      ],
+      "evidence": [
+        "docs/notes/P07-rlhf-pipeline.md"
+      ],
+      "acceptance": "Diagram correctly separates conceptual models from actual GPU memory placement",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10"
+      ]
+    },
+    {
+      "id": "P07-02",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Design preference rubric and candidate sampling",
+      "concepts": [
+        "Pair quality",
+        "grader instructions",
+        "diversity",
+        "preference ambiguity and source attribution"
+      ],
+      "tasks": [
+        "Define chosen/rejected criteria",
+        "Generate candidates from B1 with controlled decoding",
+        "Tag cases where both outputs are bad"
+      ],
+      "evidence": [
+        "data/preference_rubric.md and pairs"
+      ],
+      "acceptance": "Pairwise decisions defensible without relying only on model self-judgment",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-01"
+      ]
+    },
+    {
+      "id": "P07-03",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 3,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Audit annotator disagreement and preference noise",
+      "concepts": [
+        "Inter-rater agreement",
+        "tie policies",
+        "label flips",
+        "independence and adjudication"
+      ],
+      "tasks": [
+        "Double-rate sample",
+        "Measure disagreement",
+        "Document difficult or ambiguous comparisons"
+      ],
+      "evidence": [
+        "data/preference_audit.md"
+      ],
+      "acceptance": "Label provenance, disagreement and uncertain cases recorded",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-02"
+      ]
+    },
+    {
+      "id": "P07-04",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 4,
+      "kind": "concept",
+      "optional": false,
+      "title": "Derive Bradley–Terry reward preference model",
+      "concepts": [
+        "Logistic pairwise preferences",
+        "scalar reward",
+        "score differences",
+        "identifiability and bias"
+      ],
+      "tasks": [
+        "Derive pairwise probability and CE loss",
+        "Evaluate synthetic reward scores"
+      ],
+      "evidence": [
+        "docs/notes/P07-bradley-terry.md"
+      ],
+      "acceptance": "Worked numbers and likelihood are correct",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10"
+      ]
+    },
+    {
+      "id": "P07-05",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 5,
+      "kind": "lab",
+      "optional": false,
+      "title": "Train/evaluate a tiny reward model",
+      "concepts": [
+        "Reward head",
+        "preference loss",
+        "held-out accuracy",
+        "length bias"
+      ],
+      "tasks": [
+        "Fit a small reward predictor or reward head on synthetic preferences",
+        "Compare held-out labels and inspect easy shortcuts"
+      ],
+      "evidence": [
+        "train/reward/reward_model_report.md"
+      ],
+      "acceptance": "Reward accuracy and false-positive/length-bias examples reported",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-04"
+      ]
+    },
+    {
+      "id": "P07-06",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 6,
+      "kind": "concept",
+      "optional": false,
+      "title": "Derive DPO from KL-regularized preference objective",
+      "concepts": [
+        "Reference policy",
+        "log ratios",
+        "beta",
+        "logistic objective and implicit reward"
+      ],
+      "tasks": [
+        "Show reward-policy relation and DPO loss derivation",
+        "Explicitly distinguish loss from closed-form weight update"
+      ],
+      "evidence": [
+        "docs/notes/P07-dpo-derivation.md"
+      ],
+      "acceptance": "Derivation matches DPO paper up to declared notation and explains role of beta",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10"
+      ]
+    },
+    {
+      "id": "P07-07",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement chosen/rejected sequence log probabilities",
+      "concepts": [
+        "Autoregressive token logprobs",
+        "masks",
+        "length normalization",
+        "pad and template mistakes"
+      ],
+      "tasks": [
+        "Write batched selected-token log-prob calculator",
+        "Test small known sequences and off-by-one shifts"
+      ],
+      "evidence": [
+        "train/dpo/sequence_logprobs.py and tests"
+      ],
+      "acceptance": "Toy probabilities and masks match hand computations",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-06"
+      ]
+    },
+    {
+      "id": "P07-08",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 8,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement DPO loss from scratch",
+      "concepts": [
+        "Log-sigmoid",
+        "chosen/rejected policy-reference advantages and gradient direction"
+      ],
+      "tasks": [
+        "Implement loss using sequence log-probs",
+        "Test chosen preference gradient signs",
+        "Compare with trusted implementation on tiny data"
+      ],
+      "evidence": [
+        "train/dpo/dpo_scratch.py and tests"
+      ],
+      "acceptance": "Numeric loss/gradient tests pass and reference model is frozen",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-07"
+      ]
+    },
+    {
+      "id": "P07-09",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 9,
+      "kind": "concept",
+      "optional": false,
+      "title": "Analyze beta and reference-policy choice",
+      "concepts": [
+        "KL deviation",
+        "temperature",
+        "stability",
+        "reference-free variants and DPO proxy telemetry"
+      ],
+      "tasks": [
+        "Sweep beta on toy preference problem",
+        "Measure log-ratio, implicit margin and external task score"
+      ],
+      "evidence": [
+        "experiments/P07/beta_study.md"
+      ],
+      "acceptance": "Makes no false equivalence between higher margins and actual helpfulness",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10"
+      ]
+    },
+    {
+      "id": "P07-10",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 10,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Run TRL DPO to create B2",
+      "concepts": [
+        "PEFT DPO",
+        "pair formats",
+        "token budgets",
+        "reference handling and resumability"
+      ],
+      "tasks": [
+        "Train B1 adapter with valid pairs",
+        "Record model revisions and run config",
+        "Evaluate unchanged frozen benchmark"
+      ],
+      "evidence": [
+        "train/dpo/b2_run.md"
+      ],
+      "acceptance": "B2 loadable and benchmark outputs comparable to B0/B1",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-09"
+      ]
+    },
+    {
+      "id": "P07-11",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 11,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Detect length bias and self-evaluation failure",
+      "concepts": [
+        "Response verbosity",
+        "judge positional bias",
+        "pair-label bias and overoptimization"
+      ],
+      "tasks": [
+        "Build adversarial long-vs-short pairs",
+        "Run blinded human/sample judge checks",
+        "Compare proxy margins to external pass rate"
+      ],
+      "evidence": [
+        "experiments/P07/preference_failure_modes.md"
+      ],
+      "acceptance": "At least one proxy/independent-metric discrepancy demonstrated or investigated",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-10"
+      ]
+    },
+    {
+      "id": "P07-12",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 12,
+      "kind": "concept",
+      "optional": false,
+      "title": "Compare IPO, ORPO, SimPO and DPO tradeoffs",
+      "concepts": [
+        "Objectives",
+        "reference models",
+        "SFT integration and implementation assumptions"
+      ],
+      "tasks": [
+        "Create equations/assumptions/compute comparison table",
+        "Choose one variant for optional additional run"
+      ],
+      "evidence": [
+        "docs/notes/P07-offline_variants.md"
+      ],
+      "acceptance": "Table accurately distinguishes reward-free/reference-free claims and no one universal winner",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10"
+      ]
+    },
+    {
+      "id": "P07-13",
+      "phase": 7,
+      "phase_title": "Reward modeling and offline preferences",
+      "weeks": "Weeks 15–17",
+      "number": 13,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 7 independent B2 evaluation gate",
+      "concepts": [
+        "Blind win rate",
+        "formatting",
+        "task success",
+        "regressions",
+        "response length and uncertainty"
+      ],
+      "tasks": [
+        "Report B1/B2 chosen/rejected telemetry and independent task outcomes",
+        "Audit label quality and bad pairs"
+      ],
+      "evidence": [
+        "docs/gates/phase-07.md and eval/preference_eval.md"
+      ],
+      "acceptance": "B2 assessed on frozen independent prompts, not reward margin alone",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DPO paper",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "label": "TRL DPO trainer",
+          "url": "https://huggingface.co/docs/trl/dpo_trainer"
+        },
+        {
+          "label": "TRL reward trainer",
+          "url": "https://huggingface.co/docs/trl/reward_trainer"
+        }
+      ],
+      "prerequisites": [
+        "P06-10",
+        "P07-12"
+      ]
+    },
+    {
+      "id": "P08-01",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Formulate post-training as sequential policy optimization",
+      "concepts": [
+        "State/prompt",
+        "action tokens",
+        "trajectory",
+        "reward",
+        "log probabilities and objective"
+      ],
+      "tasks": [
+        "Define policy and trajectory for toy task",
+        "Distinguish token-level gradients from sequence-level reward"
+      ],
+      "evidence": [
+        "docs/notes/P08-rl-formalism.md"
+      ],
+      "acceptance": "Equations and mapping to LLM generation are consistent",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13"
+      ]
+    },
+    {
+      "id": "P08-02",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement REINFORCE on tiny verifiable task",
+      "concepts": [
+        "Score-function estimator",
+        "sampled actions",
+        "variance and baseline"
+      ],
+      "tasks": [
+        "Code minimal categorical-policy REINFORCE",
+        "Compare reward curve with/without baseline across seeds"
+      ],
+      "evidence": [
+        "train/rl/reinforce_toy.py and notes"
+      ],
+      "acceptance": "Updates increase expected reward in toy task and variance effect documented",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13",
+        "P08-01"
+      ]
+    },
+    {
+      "id": "P08-03",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 3,
+      "kind": "concept",
+      "optional": false,
+      "title": "Understand value baselines, advantages and KL",
+      "concepts": [
+        "Advantage estimates",
+        "variance reduction",
+        "reference-policy constraint and reward shaping"
+      ],
+      "tasks": [
+        "Derive one policy gradient step with baseline",
+        "Explain why KL prevents unconstrained policy drift"
+      ],
+      "evidence": [
+        "docs/notes/P08-advantage-kl.md"
+      ],
+      "acceptance": "Example shows unbiased baseline interpretation and tradeoffs",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13"
+      ]
+    },
+    {
+      "id": "P08-04",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 4,
+      "kind": "concept",
+      "optional": false,
+      "title": "Compare PPO, GRPO and RLOO",
+      "concepts": [
+        "Clipped policy ratio",
+        "value head",
+        "group-relative normalization and leave-one-out baselines"
+      ],
+      "tasks": [
+        "Create objective/compute comparison",
+        "Explain group size and zero-variance group corner case"
+      ],
+      "evidence": [
+        "docs/notes/P08-ppo-grpo-rloo.md"
+      ],
+      "acceptance": "Correctly distinguishes value model requirements and algorithm implementation choices",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13"
+      ]
+    },
+    {
+      "id": "P08-05",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 5,
+      "kind": "lab",
+      "optional": false,
+      "title": "Build verifiable reward oracle",
+      "concepts": [
+        "Unit tests",
+        "JSON/schema",
+        "arithmetic checker",
+        "cheating resistance and partial credit"
+      ],
+      "tasks": [
+        "Implement deterministic grader with adversarial cases",
+        "Return reward plus failure reason",
+        "Unit-test false passes"
+      ],
+      "evidence": [
+        "eval/verifiable_reward.py and tests"
+      ],
+      "acceptance": "Reward tests reject malformed but superficially compliant answers",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13",
+        "P08-04"
+      ]
+    },
+    {
+      "id": "P08-06",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 6,
+      "kind": "concept",
+      "optional": false,
+      "title": "Model rollout generation and off-policy mismatch",
+      "concepts": [
+        "Sampling",
+        "rollout batch",
+        "response length",
+        "stale policy",
+        "max tokens and generation cost"
+      ],
+      "tasks": [
+        "Write rollout schema including prompt, policy revision, response, logprobs and grader version",
+        "Estimate memory/token costs"
+      ],
+      "evidence": [
+        "docs/notes/P08-rollout-contract.md"
+      ],
+      "acceptance": "Schema allows policy version and exact reward reproduction",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13"
+      ]
+    },
+    {
+      "id": "P08-07",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement tiny GRPO-style group-relative objective",
+      "concepts": [
+        "Group reward mean/std",
+        "zero variance",
+        "clipped ratios",
+        "reference term"
+      ],
+      "tasks": [
+        "Implement group advantage on 3–5 trajectories",
+        "Unit-test equal rewards and empty/invalid groups"
+      ],
+      "evidence": [
+        "train/rl/grpo_toy.py and tests"
+      ],
+      "acceptance": "Numerical tests pass including all-equal-reward case",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13",
+        "P08-06"
+      ]
+    },
+    {
+      "id": "P08-08",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 8,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Train a small B3 with deterministic verifier",
+      "concepts": [
+        "Small model",
+        "online rollouts",
+        "TRL compatibility",
+        "cloud fallback and target task"
+      ],
+      "tasks": [
+        "Train a tiny or 0.5–1.5B model on verifiable subset",
+        "Record policy/ref model revision and generated-token budget"
+      ],
+      "evidence": [
+        "train/rl/b3_run.md"
+      ],
+      "acceptance": "B3 exists or a documented hardware-constrained minimal equivalent with honest limitation",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13",
+        "P08-07"
+      ]
+    },
+    {
+      "id": "P08-09",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 9,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Analyze reward hacking and mitigation",
+      "concepts": [
+        "Proxy reward exploitation",
+        "judge shortcuts",
+        "prompt exploits and length bias"
+      ],
+      "tasks": [
+        "Create controlled weak reward; observe exploit in sandbox",
+        "Harden reward and retest with held-out attacks"
+      ],
+      "evidence": [
+        "experiments/P08/reward_hacking.md"
+      ],
+      "acceptance": "Shows exploit and measurable difference after mitigation",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13",
+        "P08-08"
+      ]
+    },
+    {
+      "id": "P08-10",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 10,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Evaluate B3 vs B1/B2 independently",
+      "concepts": [
+        "Success/pass rate",
+        "robustness",
+        "response length",
+        "reward",
+        "KL",
+        "generation cost"
+      ],
+      "tasks": [
+        "Run frozen held-out evaluation of all checkpoints",
+        "Plot proxy rewards vs externally verified task success"
+      ],
+      "evidence": [
+        "eval/online_rl_report.md"
+      ],
+      "acceptance": "Reports gains and failures without assuming B3 must beat B2",
+      "estimated_hours": 5.0,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13",
+        "P08-09"
+      ]
+    },
+    {
+      "id": "P08-11",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 11,
+      "kind": "concept",
+      "optional": false,
+      "title": "Model online RL resource economics",
+      "concepts": [
+        "Sampling versus optimizer compute",
+        "rollout memory",
+        "throughput",
+        "cloud billing and checkpoints"
+      ],
+      "tasks": [
+        "Estimate generated tokens, updates, GPU-hours and failure/retry costs",
+        "Compare with measured B3"
+      ],
+      "evidence": [
+        "experiments/P08/rl_compute_budget.md"
+      ],
+      "acceptance": "Budget model reconciled with observed cost and operational limitations",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13"
+      ]
+    },
+    {
+      "id": "P08-12",
+      "phase": 8,
+      "phase_title": "Online RL and verifiable rewards",
+      "weeks": "Weeks 18–20",
+      "number": 12,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 8 online RL competency gate",
+      "concepts": [
+        "Policy gradients",
+        "small online experiment",
+        "independent evaluation and reward hacking"
+      ],
+      "tasks": [
+        "Review objective derivations and tests",
+        "Publish B3 outcome including negative results",
+        "Record alignment risks"
+      ],
+      "evidence": [
+        "docs/gates/phase-08.md"
+      ],
+      "acceptance": "Can explain reward/task divergence and reproduce one online-update experiment",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "DeepSeekMath / GRPO",
+          "url": "https://arxiv.org/abs/2402.03300"
+        },
+        {
+          "label": "TRL GRPO trainer",
+          "url": "https://huggingface.co/docs/trl/grpo_trainer"
+        },
+        {
+          "label": "InstructGPT / RLHF",
+          "url": "https://arxiv.org/abs/2203.02155"
+        }
+      ],
+      "prerequisites": [
+        "P07-13",
+        "P08-11"
+      ]
+    },
+    {
+      "id": "P09-01",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Quantify GPU communication collectives",
+      "concepts": [
+        "all-reduce",
+        "all-gather",
+        "reduce-scatter",
+        "bandwidth",
+        "latency and tensor shapes"
+      ],
+      "tasks": [
+        "Calculate message size and estimated communication cost",
+        "Explain synchronous gradient summation"
+      ],
+      "evidence": [
+        "docs/notes/P09-collectives.md"
+      ],
+      "acceptance": "Numeric example is correct and distinguishes latency from bandwidth costs",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-02",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Implement 2-rank CPU Gloo all-reduce demo",
+      "concepts": [
+        "torch.distributed process groups",
+        "rank/world size",
+        "collective correctness"
+      ],
+      "tasks": [
+        "Spawn two CPU processes",
+        "Run all-reduce and compare expected sum",
+        "Cleanly destroy process group"
+      ],
+      "evidence": [
+        "train/distributed/gloo_demo.py and test log"
+      ],
+      "acceptance": "Correct two-rank result without claiming multi-GPU speedup",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12",
+        "P09-01"
+      ]
+    },
+    {
+      "id": "P09-03",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 3,
+      "kind": "concept",
+      "optional": false,
+      "title": "Derive DDP and gradient accumulation behavior",
+      "concepts": [
+        "Replication",
+        "synchronizing gradients",
+        "no_sync",
+        "accumulation steps and effective batch"
+      ],
+      "tasks": [
+        "Diagram DDP forward/backward synchronization",
+        "Work through a two-rank effective-batch example"
+      ],
+      "evidence": [
+        "docs/notes/P09-ddp.md"
+      ],
+      "acceptance": "Correct collective timing and batch-size formula",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-04",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 4,
+      "kind": "concept",
+      "optional": false,
+      "title": "Map tensor, pipeline and sequence/context parallelism",
+      "concepts": [
+        "Parameter partitioning",
+        "activations",
+        "pipeline bubble",
+        "KV/attention context splitting"
+      ],
+      "tasks": [
+        "Sketch placement for same toy transformer under 3 approaches",
+        "List communication boundaries"
+      ],
+      "evidence": [
+        "docs/notes/P09-parallelism-types.md"
+      ],
+      "acceptance": "Correctly distinguishes parallelism directions and expected tradeoffs",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-05",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 5,
+      "kind": "concept",
+      "optional": false,
+      "title": "Derive ZeRO stages without fixed multipliers",
+      "concepts": [
+        "Optimizer",
+        "gradient and parameter sharding; rank count and buffers"
+      ],
+      "tasks": [
+        "Calculate per-rank state memory for ZeRO 1/2/3 on example model",
+        "Contrast with DDP"
+      ],
+      "evidence": [
+        "docs/notes/P09-zero-memory.md"
+      ],
+      "acceptance": "Savings expressed as functions of world size and sharded state, not invented 4x/8x constants",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-06",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 6,
+      "kind": "concept",
+      "optional": false,
+      "title": "Understand FSDP2 and DTensor",
+      "concepts": [
+        "Parameter sharding",
+        "all-gather/reduce-scatter",
+        "mesh",
+        "mixed precision and resharding"
+      ],
+      "tasks": [
+        "Read FSDP2 interface and draw one forward/backward communication timeline"
+      ],
+      "evidence": [
+        "docs/notes/P09-fsdp2.md"
+      ],
+      "acceptance": "Explains when parameters are materialized and returned to shard state",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-07",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Write valid DDP/FSDP/DeepSpeed configurations",
+      "concepts": [
+        "accelerate config",
+        "ZeRO stage",
+        "sharding strategy",
+        "checkpoint format",
+        "device assumptions"
+      ],
+      "tasks": [
+        "Author minimal configs",
+        "Validate syntax and explain each key",
+        "Document not-run configurations explicitly"
+      ],
+      "evidence": [
+        "train/distributed/configs/ and readme"
+      ],
+      "acceptance": "Configs are internally consistent and tested where available",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12",
+        "P09-06"
+      ]
+    },
+    {
+      "id": "P09-08",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 8,
+      "kind": "concept",
+      "optional": false,
+      "title": "Checkpointing and recovery in sharded systems",
+      "concepts": [
+        "Full versus local/sharded state dict",
+        "save/reload",
+        "optimizer shards",
+        "failures"
+      ],
+      "tasks": [
+        "Outline restore plan for interrupted two-rank job",
+        "List integrity/version checks"
+      ],
+      "evidence": [
+        "docs/notes/P09-sharded-checkpoints.md"
+      ],
+      "acceptance": "Can distinguish metadata and model shards needed for a complete resume",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-09",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 9,
+      "kind": "concept",
+      "optional": false,
+      "title": "CPU/NVMe offload and performance limitations",
+      "concepts": [
+        "Memory/PCIe/disk bandwidth",
+        "pinned RAM",
+        "activation/optimizer offload and cloud risks"
+      ],
+      "tasks": [
+        "Estimate bytes moved per step for an offload plan",
+        "Compare SSD/RAM/GPU transfer times"
+      ],
+      "evidence": [
+        "experiments/P09/offload_budget.md"
+      ],
+      "acceptance": "Assumptions and limits explicit; no claim that offload grants unlimited practical memory",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-10",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 10,
+      "kind": "stretch",
+      "optional": true,
+      "title": "Optional real 2+ GPU comparison",
+      "concepts": [
+        "Empirical DDP vs FSDP/ZeRO",
+        "memory accounting",
+        "scaling and cloud spending"
+      ],
+      "tasks": [
+        "Provision approved multi-GPU environment",
+        "Run same tiny model with measured throughput/peak memory",
+        "Dispose resources"
+      ],
+      "evidence": [
+        "experiments/P09/real_multigpu.md"
+      ],
+      "acceptance": "Reports actual devices and measured results, or records why experiment was deferred",
+      "estimated_hours": 5.0,
+      "resource": "cloud-conditional",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12"
+      ]
+    },
+    {
+      "id": "P09-11",
+      "phase": 9,
+      "phase_title": "Distributed training systems",
+      "weeks": "Weeks 21–22",
+      "number": 11,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 9 systems comprehension gate",
+      "concepts": [
+        "Collectives correctness",
+        "memory model and honest hardware boundaries"
+      ],
+      "tasks": [
+        "Reproduce CPU demo",
+        "Review sharding calculation and config plan",
+        "Separate executed and conceptual results"
+      ],
+      "evidence": [
+        "docs/gates/phase-09.md"
+      ],
+      "acceptance": "Correct numerical demo and explicit evidence limitations",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "PyTorch distributed",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.html"
+        },
+        {
+          "label": "FSDP2 fully_shard",
+          "url": "https://docs.pytorch.org/docs/stable/distributed.fsdp.fully_shard.html"
+        },
+        {
+          "label": "DeepSpeed ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/"
+        }
+      ],
+      "prerequisites": [
+        "P08-12",
+        "P09-10"
+      ]
+    },
+    {
+      "id": "P10-01",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Understand adapter-only vs merged model artifacts",
+      "concepts": [
+        "Base checkpoint lineage",
+        "delta weights",
+        "precision",
+        "compatibility and reversible releases"
+      ],
+      "tasks": [
+        "Diagram adapter and merged artifact dependencies",
+        "Record model hash, license and version"
+      ],
+      "evidence": [
+        "models_and_datasets/model_release_manifest.md"
+      ],
+      "acceptance": "Artifact can be reconstructed from base revision and adapter reference",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11"
+      ]
+    },
+    {
+      "id": "P10-02",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Merge LoRA and check numerical equivalence",
+      "concepts": [
+        "Dequantize/merge/requantize tradeoffs",
+        "logit tolerances and save/load"
+      ],
+      "tasks": [
+        "Merge supported floating weights",
+        "Compare frozen eval metrics and logits against adapter-loaded model",
+        "Preserve original adapter"
+      ],
+      "evidence": [
+        "experiments/P10/merge_report.md"
+      ],
+      "acceptance": "Merge differences measured; quantized merge not assumed lossless",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11",
+        "P10-01"
+      ]
+    },
+    {
+      "id": "P10-03",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 3,
+      "kind": "concept",
+      "optional": false,
+      "title": "Compare GGUF, AWQ, GPTQ and runtime compatibility",
+      "concepts": [
+        "Weight formats",
+        "calibration",
+        "backends",
+        "EXL2-specific runtime ecosystem and accuracy tradeoffs"
+      ],
+      "tasks": [
+        "Build matrix by runtime/device/method",
+        "Check actual model and kernel compatibility"
+      ],
+      "evidence": [
+        "docs/notes/P10-quantization-formats.md"
+      ],
+      "acceptance": "Distinguishes export format from quantization algorithm and inference engine",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11"
+      ]
+    },
+    {
+      "id": "P10-04",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 4,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Measure post-training quantization regression",
+      "concepts": [
+        "Calibration",
+        "accuracy/latency/memory",
+        "brittle output formats and edge cases"
+      ],
+      "tasks": [
+        "Quantize a supported small model",
+        "Run unchanged frozen benchmark",
+        "Report per-slice and memory differences"
+      ],
+      "evidence": [
+        "experiments/P10/quantization_eval.md"
+      ],
+      "acceptance": "Quality-cost comparison includes failing cases and exact artifact identifier",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11",
+        "P10-03"
+      ]
+    },
+    {
+      "id": "P10-05",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 5,
+      "kind": "concept",
+      "optional": false,
+      "title": "Calculate KV cache with GQA and context",
+      "concepts": [
+        "Layers",
+        "KV heads",
+        "head dimension",
+        "bytes per element",
+        "batch and tokens"
+      ],
+      "tasks": [
+        "Derive KV cache equation",
+        "Calculate example for different batch/context and cache dtype"
+      ],
+      "evidence": [
+        "docs/notes/P10-kv-cache.md"
+      ],
+      "acceptance": "Numerical estimate correct and accounts for KV heads rather than query heads",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11"
+      ]
+    },
+    {
+      "id": "P10-06",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 6,
+      "kind": "concept",
+      "optional": false,
+      "title": "Explain continuous batching and paged attention",
+      "concepts": [
+        "Prefill/decode separation",
+        "latency",
+        "token throughput",
+        "scheduling and KV fragmentation"
+      ],
+      "tasks": [
+        "Trace two concurrent requests through prefill/decode",
+        "Document PagedAttention versus FlashAttention roles"
+      ],
+      "evidence": [
+        "docs/notes/P10-serving-scheduler.md"
+      ],
+      "acceptance": "Clearly differentiates serving-time KV management from training attention implementation",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11"
+      ]
+    },
+    {
+      "id": "P10-07",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 7,
+      "kind": "lab",
+      "optional": false,
+      "title": "Deploy an OpenAI-compatible inference endpoint",
+      "concepts": [
+        "vLLM hardware/model compatibility",
+        "alternative fallback",
+        "API smoke test and logs"
+      ],
+      "tasks": [
+        "Deploy realistically sized 1–3B local model with supported engine",
+        "If unsupported locally, use alternative and separate cloud vLLM run",
+        "Send valid test requests"
+      ],
+      "evidence": [
+        "serve/README.md and serve/smoke_test.py"
+      ],
+      "acceptance": "Actual API response and reproducible launch command documented",
+      "estimated_hours": 3.5,
+      "resource": "local-or-cloud",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11",
+        "P10-06"
+      ]
+    },
+    {
+      "id": "P10-08",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 8,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Benchmark TTFT, TPOT, throughput and concurrency",
+      "concepts": [
+        "p50/p95 latency",
+        "requests/sec",
+        "tokens/sec",
+        "context and GPU use"
+      ],
+      "tasks": [
+        "Run concurrency sweep with fixed workloads",
+        "Report latency distribution and errors",
+        "Connect to memory budget"
+      ],
+      "evidence": [
+        "experiments/P10/serving_benchmark.md"
+      ],
+      "acceptance": "Includes repeatable client load protocol, request sizes and negative cases",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11",
+        "P10-07"
+      ]
+    },
+    {
+      "id": "P10-09",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 9,
+      "kind": "concept",
+      "optional": false,
+      "title": "Secure LoRA adapters and serving management",
+      "concepts": [
+        "Trust boundaries",
+        "auth",
+        "untrusted weight loading",
+        "admin endpoint exposure",
+        "rollback"
+      ],
+      "tasks": [
+        "Threat-model dynamic adapter management",
+        "Document access restriction and rollback trigger"
+      ],
+      "evidence": [
+        "docs/SERVING_SECURITY.md"
+      ],
+      "acceptance": "No public dynamic adapter-loading control; documented auth and rollback boundaries",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11"
+      ]
+    },
+    {
+      "id": "P10-10",
+      "phase": 10,
+      "phase_title": "Serving, artifact engineering and observability",
+      "weeks": "Week 23",
+      "number": 10,
+      "kind": "gate",
+      "optional": false,
+      "title": "Phase 10 serving acceptance gate",
+      "concepts": [
+        "API quality",
+        "quantization equivalence",
+        "metrics and artifact lineage"
+      ],
+      "tasks": [
+        "Verify B1/B2 quality after serving changes",
+        "Publish load-test evidence and model card",
+        "Demonstrate rollback"
+      ],
+      "evidence": [
+        "docs/gates/phase-10.md and serve/serving_report.md"
+      ],
+      "acceptance": "Reproducible API and a quality/latency/memory comparison from executed runs",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "vLLM LoRA serving",
+          "url": "https://docs.vllm.ai/en/stable/features/lora/"
+        },
+        {
+          "label": "vLLM metrics",
+          "url": "https://docs.vllm.ai/en/latest/usage/metrics/"
+        },
+        {
+          "label": "Hugging Face model cards",
+          "url": "https://huggingface.co/docs/hub/model-cards"
+        }
+      ],
+      "prerequisites": [
+        "P09-11",
+        "P10-09"
+      ]
+    },
+    {
+      "id": "P11-01",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 1,
+      "kind": "concept",
+      "optional": false,
+      "title": "Finalize capstone hypothesis and success criteria",
+      "concepts": [
+        "Task objective",
+        "training-method hypotheses",
+        "tradeoffs",
+        "feasibility and stop rules"
+      ],
+      "tasks": [
+        "State baseline, primary metric, unacceptable regression and compute cap",
+        "List hypotheses for B1/B2/B3"
+      ],
+      "evidence": [
+        "docs/capstone/hypotheses.md"
+      ],
+      "acceptance": "Hypotheses falsifiable and metrics fixed before selecting best run",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10"
+      ]
+    },
+    {
+      "id": "P11-02",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 2,
+      "kind": "lab",
+      "optional": false,
+      "title": "Curate final model/data/license cards",
+      "concepts": [
+        "Provenance",
+        "consent",
+        "model limitations",
+        "checkpoint lineage and dataset usage"
+      ],
+      "tasks": [
+        "Review final model and dataset cards",
+        "Remove credentials, restricted data and unlicensed artifacts"
+      ],
+      "evidence": [
+        "models_and_datasets/README.md and cards"
+      ],
+      "acceptance": "Cards allow inspection of permitted use and known shortcomings",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-01"
+      ]
+    },
+    {
+      "id": "P11-03",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 3,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Reproduce B0 prompted baseline from clean state",
+      "concepts": [
+        "Untuned instruct checkpoint",
+        "template pinning",
+        "reproducible evaluation and split hash"
+      ],
+      "tasks": [
+        "Execute B0 in clean environment",
+        "Record checkpoint and output hashes"
+      ],
+      "evidence": [
+        "experiments/capstone/B0.md"
+      ],
+      "acceptance": "Reproduction matches reported baseline within declared stochastic tolerance",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-02"
+      ]
+    },
+    {
+      "id": "P11-04",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 4,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Reproduce B1 SFT and matched ablations",
+      "concepts": [
+        "Adapter",
+        "token budgets",
+        "seeds",
+        "config",
+        "accuracy and regression slices"
+      ],
+      "tasks": [
+        "Rerun selected B1",
+        "Summarize rank/module/data ablation and best-vs-average caveat"
+      ],
+      "evidence": [
+        "experiments/capstone/B1.md"
+      ],
+      "acceptance": "All compared runs share frozen evaluation and traceable configuration",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-03"
+      ]
+    },
+    {
+      "id": "P11-05",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 5,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Reproduce B2 offline preference alignment",
+      "concepts": [
+        "DPO/reference checkpoints",
+        "preference provenance",
+        "reward margins and independent evaluation"
+      ],
+      "tasks": [
+        "Load or retrain B2 from B1",
+        "Verify preference and held-out performance"
+      ],
+      "evidence": [
+        "experiments/capstone/B2.md"
+      ],
+      "acceptance": "Distinguishes training proxy margins from independent task outcomes",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-04"
+      ]
+    },
+    {
+      "id": "P11-06",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 6,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Reproduce B3 bounded online RL branch",
+      "concepts": [
+        "Verifiable rewards",
+        "rollout protocol",
+        "length/cost",
+        "reward hacking and outcomes"
+      ],
+      "tasks": [
+        "Reproduce small B3 or resource-gated minimal RL equivalent",
+        "Compare with B1 and B2"
+      ],
+      "evidence": [
+        "experiments/capstone/B3.md"
+      ],
+      "acceptance": "Method, failure modes and comparison made explicit even when B3 underperforms",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-05"
+      ]
+    },
+    {
+      "id": "P11-07",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 7,
+      "kind": "experiment",
+      "optional": false,
+      "title": "Consolidate independent evaluation and uncertainty",
+      "concepts": [
+        "Per-item paired comparisons",
+        "confidence bands",
+        "safety regressions",
+        "failure taxonomy and cost"
+      ],
+      "tasks": [
+        "Generate one B0–B3 scorecard",
+        "Include slices, calibration limits and uncertainty"
+      ],
+      "evidence": [
+        "eval/capstone_scorecard.md"
+      ],
+      "acceptance": "Claims trace to held-out item IDs, metric computation and negative results",
+      "estimated_hours": 5.0,
+      "resource": "hybrid",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-06"
+      ]
+    },
+    {
+      "id": "P11-08",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 8,
+      "kind": "lab",
+      "optional": false,
+      "title": "Package inference interface and artifact integrity",
+      "concepts": [
+        "Model/adapter hashes",
+        "inference endpoint",
+        "request schema",
+        "quantized artifact",
+        "rollback"
+      ],
+      "tasks": [
+        "Provide launch and smoke-test commands",
+        "Verify output schema and artifact manifest",
+        "Retain rollback path"
+      ],
+      "evidence": [
+        "serve/capstone_release.md"
+      ],
+      "acceptance": "Fresh user can launch tested variant and reproduce sample request",
+      "estimated_hours": 3.5,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-07"
+      ]
+    },
+    {
+      "id": "P11-09",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 9,
+      "kind": "concept",
+      "optional": false,
+      "title": "Write research-style final technical report",
+      "concepts": [
+        "Methods",
+        "controls",
+        "reproducibility",
+        "statistical limitations",
+        "nonresults and research questions"
+      ],
+      "tasks": [
+        "Write 6–10 page report",
+        "Cite original papers and pinned docs",
+        "Explain why observed improvements are or are not causal"
+      ],
+      "evidence": [
+        "REPORT.md"
+      ],
+      "acceptance": "Report has hypotheses, methods, results, failures, limitations, GPU/cost budget and next experiments",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10"
+      ]
+    },
+    {
+      "id": "P11-10",
+      "phase": 11,
+      "phase_title": "Capstone and research portfolio",
+      "weeks": "Week 24",
+      "number": 10,
+      "kind": "gate",
+      "optional": false,
+      "title": "Final portfolio review and retrospective",
+      "concepts": [
+        "Peer review",
+        "reproducibility check",
+        "evidence-led competencies",
+        "next specialization"
+      ],
+      "tasks": [
+        "Run clean-room reproduction checklist",
+        "Link issue proofs and code",
+        "Select two papers for post-course replication"
+      ],
+      "evidence": [
+        "docs/gates/phase-11.md and docs/PORTFOLIO_INDEX.md"
+      ],
+      "acceptance": "Every core topic has evidence or an explicit waiver; final claims accurately reflect executed compute",
+      "estimated_hours": 2.0,
+      "resource": "local",
+      "refs": [
+        {
+          "label": "LLM Post-Training syllabus",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md"
+        },
+        {
+          "label": "Course evaluation protocol",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/docs/EVALUATION_PROTOCOL.md"
+        },
+        {
+          "label": "Course experiment template",
+          "url": "https://github.com/Aragami007/llm-post-training-engineering/blob/main/templates/experiment_report.md"
+        }
+      ],
+      "prerequisites": [
+        "P10-10",
+        "P11-09"
+      ]
+    }
+  ]
+}

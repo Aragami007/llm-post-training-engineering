@@ -1,0 +1,134 @@
+id,phase,weeks,kind,optional,estimated_hours,title,issue_markdown
+P00-01,0,Week 1,concept,false,2.0,Map the post-training lifecycle,tracker/issues/P00-01.md
+P00-02,0,Week 1,lab,false,3.5,Establish Linux/Python/Git development environment,tracker/issues/P00-02.md
+P00-03,0,Week 1,lab,false,3.5,Inventory RTX 4060 and storage,tracker/issues/P00-03.md
+P00-04,0,Week 1,concept,false,2.0,"Check model cards, dataset cards and licenses",tracker/issues/P00-04.md
+P00-05,0,Week 1,lab,false,3.5,Build versioned experiment configuration,tracker/issues/P00-05.md
+P00-06,0,Week 1,experiment,false,5.0,Characterize deterministic vs nondeterministic execution,tracker/issues/P00-06.md
+P00-07,0,Week 1,lab,false,3.5,Run a tiny inference and backward pass,tracker/issues/P00-07.md
+P00-08,0,Week 1,lab,false,3.5,Implement save-resume smoke test,tracker/issues/P00-08.md
+P00-09,0,Week 1,gate,false,2.0,Phase 0 reproducibility review,tracker/issues/P00-09.md
+P01-01,1,Weeks 2–3,concept,false,2.0,Causal language-model objective and teacher forcing,tracker/issues/P01-01.md
+P01-02,1,Weeks 2–3,concept,false,2.0,"Token embeddings, output heads and tokenization",tracker/issues/P01-02.md
+P01-03,1,Weeks 2–3,concept,false,2.0,Positional representations and RoPE,tracker/issues/P01-03.md
+P01-04,1,Weeks 2–3,lab,false,3.5,Implement masked scaled dot-product attention,tracker/issues/P01-04.md
+P01-05,1,Weeks 2–3,concept,false,2.0,"Multi-head attention, GQA and KV heads",tracker/issues/P01-05.md
+P01-06,1,Weeks 2–3,concept,false,2.0,"Residuals, LayerNorm/RMSNorm and MLP blocks",tracker/issues/P01-06.md
+P01-07,1,Weeks 2–3,lab,false,3.5,Code a minimal decoder-only transformer,tracker/issues/P01-07.md
+P01-08,1,Weeks 2–3,concept,false,2.0,"AdamW, schedulers and optimizer state",tracker/issues/P01-08.md
+P01-09,1,Weeks 2–3,lab,false,3.5,"Gradient accumulation, clipping and true batch size",tracker/issues/P01-09.md
+P01-10,1,Weeks 2–3,experiment,false,5.0,"FP32, FP16, BF16 and numerical stability",tracker/issues/P01-10.md
+P01-11,1,Weeks 2–3,experiment,false,5.0,"Fused SDPA, FlashAttention and sequence scaling",tracker/issues/P01-11.md
+P01-12,1,Weeks 2–3,gate,false,2.0,Phase 1 correctness and derivation gate,tracker/issues/P01-12.md
+P02-01,2,Weeks 4–5,concept,false,2.0,LoRA low-rank update derivation,tracker/issues/P02-01.md
+P02-02,2,Weeks 4–5,lab,false,3.5,Build LoRA for nn.Linear from scratch,tracker/issues/P02-02.md
+P02-03,2,Weeks 4–5,lab,false,3.5,"Test LoRA gradients, save/load and merge",tracker/issues/P02-03.md
+P02-04,2,Weeks 4–5,concept,false,2.0,Compare LoRA module coverage and rank/alpha,tracker/issues/P02-04.md
+P02-05,2,Weeks 4–5,concept,false,2.0,Weight quantization and NF4,tracker/issues/P02-05.md
+P02-06,2,Weeks 4–5,concept,false,2.0,QLoRA optimizer and backward memory path,tracker/issues/P02-06.md
+P02-07,2,Weeks 4–5,lab,false,3.5,Implement truthful CUDA memory probe,tracker/issues/P02-07.md
+P02-08,2,Weeks 4–5,experiment,false,5.0,"Sweep batch, context, checkpointing and precision",tracker/issues/P02-08.md
+P02-09,2,Weeks 4–5,experiment,false,5.0,LoRA vs QLoRA comparison on 1–3B,tracker/issues/P02-09.md
+P02-10,2,Weeks 4–5,stretch,true,5.0,Stretch: 7–8B short-context QLoRA pilot,tracker/issues/P02-10.md
+P02-11,2,Weeks 4–5,gate,false,2.0,Phase 2 adapter and memory gate,tracker/issues/P02-11.md
+P03-01,3,Weeks 6–7,concept,false,2.0,"Choose prompting, RAG, CPT, SFT or RL",tracker/issues/P03-01.md
+P03-02,3,Weeks 6–7,lab,false,3.5,Specify one bounded course evaluation task,tracker/issues/P03-02.md
+P03-03,3,Weeks 6–7,concept,false,2.0,Construct a task failure taxonomy,tracker/issues/P03-03.md
+P03-04,3,Weeks 6–7,lab,false,3.5,Build independent train/dev/test partitions,tracker/issues/P03-04.md
+P03-05,3,Weeks 6–7,experiment,false,5.0,Audit exact/semantic data leakage,tracker/issues/P03-05.md
+P03-06,3,Weeks 6–7,lab,false,3.5,Implement deterministic task grading,tracker/issues/P03-06.md
+P03-07,3,Weeks 6–7,concept,false,2.0,Design an unbiased pairwise judge rubric,tracker/issues/P03-07.md
+P03-08,3,Weeks 6–7,experiment,false,5.0,Calibrate judge scores against humans,tracker/issues/P03-08.md
+P03-09,3,Weeks 6–7,concept,false,2.0,Paired experiment design and uncertainty,tracker/issues/P03-09.md
+P03-10,3,Weeks 6–7,lab,false,3.5,Add selected general-regression and safety tests,tracker/issues/P03-10.md
+P03-11,3,Weeks 6–7,experiment,false,5.0,Run and document B0 prompt-only baseline,tracker/issues/P03-11.md
+P03-12,3,Weeks 6–7,gate,false,2.0,Phase 3 freeze-before-training gate,tracker/issues/P03-12.md
+P04-01,4,Weeks 8–9,concept,false,2.0,Understand dataset schemas and conversations,tracker/issues/P04-01.md
+P04-02,4,Weeks 8–9,lab,false,3.5,Apply the selected model's native chat template,tracker/issues/P04-02.md
+P04-03,4,Weeks 8–9,lab,false,3.5,Prove assistant-only and completion-only masks,tracker/issues/P04-03.md
+P04-04,4,Weeks 8–9,experiment,false,5.0,"Validate packing, boundaries and truncation",tracker/issues/P04-04.md
+P04-05,4,Weeks 8–9,concept,false,2.0,Establish data provenance and usage permissions,tracker/issues/P04-05.md
+P04-06,4,Weeks 8–9,lab,false,3.5,Redact privacy-sensitive data,tracker/issues/P04-06.md
+P04-07,4,Weeks 8–9,lab,false,3.5,Curate first 300–500 verified examples,tracker/issues/P04-07.md
+P04-08,4,Weeks 8–9,experiment,false,5.0,Synthesize controlled additional training data,tracker/issues/P04-08.md
+P04-09,4,Weeks 8–9,lab,false,3.5,Deduplicate exact and semantic near duplicates,tracker/issues/P04-09.md
+P04-10,4,Weeks 8–9,experiment,false,5.0,"Filter, reject-sample and audit data quality",tracker/issues/P04-10.md
+P04-11,4,Weeks 8–9,concept,false,2.0,Build dataset card and token coverage report,tracker/issues/P04-11.md
+P04-12,4,Weeks 8–9,gate,false,2.0,Phase 4 dataset admission gate,tracker/issues/P04-12.md
+P05-01,5,Weeks 10–12,concept,false,2.0,Derive masked SFT objective and training budgets,tracker/issues/P05-01.md
+P05-02,5,Weeks 10–12,lab,false,3.5,Train a transparent small SFT reference model,tracker/issues/P05-02.md
+P05-03,5,Weeks 10–12,lab,false,3.5,Train QLoRA/LoRA 1–3B B1 candidate,tracker/issues/P05-03.md
+P05-04,5,Weeks 10–12,experiment,false,5.0,Compare attention-only versus all-linear LoRA,tracker/issues/P05-04.md
+P05-05,5,Weeks 10–12,experiment,false,5.0,Compare LoRA rank and alpha configurations,tracker/issues/P05-05.md
+P05-06,5,Weeks 10–12,experiment,false,5.0,Test learning rate and schedule sensitivity,tracker/issues/P05-06.md
+P05-07,5,Weeks 10–12,experiment,false,5.0,Data quantity and synthetic-mixture ablation,tracker/issues/P05-07.md
+P05-08,5,Weeks 10–12,concept,false,2.0,Interpret overfitting versus forgetting,tracker/issues/P05-08.md
+P05-09,5,Weeks 10–12,lab,false,3.5,Capture checkpoints and resumable training,tracker/issues/P05-09.md
+P05-10,5,Weeks 10–12,stretch,true,5.0,Optional cloud scaling to 7–14B/27B,tracker/issues/P05-10.md
+P05-11,5,Weeks 10–12,gate,false,2.0,Phase 5 B1 acceptance and ablation gate,tracker/issues/P05-11.md
+P06-01,6,Weeks 13–14,concept,false,2.0,Interpret loss/perplexity and masking denominators,tracker/issues/P06-01.md
+P06-02,6,Weeks 13–14,experiment,false,5.0,Induce and diagnose overfitting safely,tracker/issues/P06-02.md
+P06-03,6,Weeks 13–14,experiment,false,5.0,Create and resolve gradient instability,tracker/issues/P06-03.md
+P06-04,6,Weeks 13–14,concept,false,2.0,Diagnose vanishing gradients and underfitting,tracker/issues/P06-04.md
+P06-05,6,Weeks 13–14,experiment,false,5.0,Compare several random seeds,tracker/issues/P06-05.md
+P06-06,6,Weeks 13–14,lab,false,3.5,Monitor tokens/sec and GPU/CPU bottlenecks,tracker/issues/P06-06.md
+P06-07,6,Weeks 13–14,lab,false,3.5,Test checkpoint and resume failure paths,tracker/issues/P06-07.md
+P06-08,6,Weeks 13–14,lab,false,3.5,Build training configuration and data-integrity tests,tracker/issues/P06-08.md
+P06-09,6,Weeks 13–14,experiment,false,5.0,Explain one unexpected metric with a controlled test,tracker/issues/P06-09.md
+P06-10,6,Weeks 13–14,gate,false,2.0,Phase 6 diagnostics gate,tracker/issues/P06-10.md
+P07-01,7,Weeks 15–17,concept,false,2.0,Understand RLHF and preference pipeline,tracker/issues/P07-01.md
+P07-02,7,Weeks 15–17,lab,false,3.5,Design preference rubric and candidate sampling,tracker/issues/P07-02.md
+P07-03,7,Weeks 15–17,experiment,false,5.0,Audit annotator disagreement and preference noise,tracker/issues/P07-03.md
+P07-04,7,Weeks 15–17,concept,false,2.0,Derive Bradley–Terry reward preference model,tracker/issues/P07-04.md
+P07-05,7,Weeks 15–17,lab,false,3.5,Train/evaluate a tiny reward model,tracker/issues/P07-05.md
+P07-06,7,Weeks 15–17,concept,false,2.0,Derive DPO from KL-regularized preference objective,tracker/issues/P07-06.md
+P07-07,7,Weeks 15–17,lab,false,3.5,Implement chosen/rejected sequence log probabilities,tracker/issues/P07-07.md
+P07-08,7,Weeks 15–17,lab,false,3.5,Implement DPO loss from scratch,tracker/issues/P07-08.md
+P07-09,7,Weeks 15–17,concept,false,2.0,Analyze beta and reference-policy choice,tracker/issues/P07-09.md
+P07-10,7,Weeks 15–17,experiment,false,5.0,Run TRL DPO to create B2,tracker/issues/P07-10.md
+P07-11,7,Weeks 15–17,experiment,false,5.0,Detect length bias and self-evaluation failure,tracker/issues/P07-11.md
+P07-12,7,Weeks 15–17,concept,false,2.0,"Compare IPO, ORPO, SimPO and DPO tradeoffs",tracker/issues/P07-12.md
+P07-13,7,Weeks 15–17,gate,false,2.0,Phase 7 independent B2 evaluation gate,tracker/issues/P07-13.md
+P08-01,8,Weeks 18–20,concept,false,2.0,Formulate post-training as sequential policy optimization,tracker/issues/P08-01.md
+P08-02,8,Weeks 18–20,lab,false,3.5,Implement REINFORCE on tiny verifiable task,tracker/issues/P08-02.md
+P08-03,8,Weeks 18–20,concept,false,2.0,"Understand value baselines, advantages and KL",tracker/issues/P08-03.md
+P08-04,8,Weeks 18–20,concept,false,2.0,"Compare PPO, GRPO and RLOO",tracker/issues/P08-04.md
+P08-05,8,Weeks 18–20,lab,false,3.5,Build verifiable reward oracle,tracker/issues/P08-05.md
+P08-06,8,Weeks 18–20,concept,false,2.0,Model rollout generation and off-policy mismatch,tracker/issues/P08-06.md
+P08-07,8,Weeks 18–20,lab,false,3.5,Implement tiny GRPO-style group-relative objective,tracker/issues/P08-07.md
+P08-08,8,Weeks 18–20,experiment,false,5.0,Train a small B3 with deterministic verifier,tracker/issues/P08-08.md
+P08-09,8,Weeks 18–20,experiment,false,5.0,Analyze reward hacking and mitigation,tracker/issues/P08-09.md
+P08-10,8,Weeks 18–20,experiment,false,5.0,Evaluate B3 vs B1/B2 independently,tracker/issues/P08-10.md
+P08-11,8,Weeks 18–20,concept,false,2.0,Model online RL resource economics,tracker/issues/P08-11.md
+P08-12,8,Weeks 18–20,gate,false,2.0,Phase 8 online RL competency gate,tracker/issues/P08-12.md
+P09-01,9,Weeks 21–22,concept,false,2.0,Quantify GPU communication collectives,tracker/issues/P09-01.md
+P09-02,9,Weeks 21–22,lab,false,3.5,Implement 2-rank CPU Gloo all-reduce demo,tracker/issues/P09-02.md
+P09-03,9,Weeks 21–22,concept,false,2.0,Derive DDP and gradient accumulation behavior,tracker/issues/P09-03.md
+P09-04,9,Weeks 21–22,concept,false,2.0,"Map tensor, pipeline and sequence/context parallelism",tracker/issues/P09-04.md
+P09-05,9,Weeks 21–22,concept,false,2.0,Derive ZeRO stages without fixed multipliers,tracker/issues/P09-05.md
+P09-06,9,Weeks 21–22,concept,false,2.0,Understand FSDP2 and DTensor,tracker/issues/P09-06.md
+P09-07,9,Weeks 21–22,lab,false,3.5,Write valid DDP/FSDP/DeepSpeed configurations,tracker/issues/P09-07.md
+P09-08,9,Weeks 21–22,concept,false,2.0,Checkpointing and recovery in sharded systems,tracker/issues/P09-08.md
+P09-09,9,Weeks 21–22,concept,false,2.0,CPU/NVMe offload and performance limitations,tracker/issues/P09-09.md
+P09-10,9,Weeks 21–22,stretch,true,5.0,Optional real 2+ GPU comparison,tracker/issues/P09-10.md
+P09-11,9,Weeks 21–22,gate,false,2.0,Phase 9 systems comprehension gate,tracker/issues/P09-11.md
+P10-01,10,Week 23,concept,false,2.0,Understand adapter-only vs merged model artifacts,tracker/issues/P10-01.md
+P10-02,10,Week 23,lab,false,3.5,Merge LoRA and check numerical equivalence,tracker/issues/P10-02.md
+P10-03,10,Week 23,concept,false,2.0,"Compare GGUF, AWQ, GPTQ and runtime compatibility",tracker/issues/P10-03.md
+P10-04,10,Week 23,experiment,false,5.0,Measure post-training quantization regression,tracker/issues/P10-04.md
+P10-05,10,Week 23,concept,false,2.0,Calculate KV cache with GQA and context,tracker/issues/P10-05.md
+P10-06,10,Week 23,concept,false,2.0,Explain continuous batching and paged attention,tracker/issues/P10-06.md
+P10-07,10,Week 23,lab,false,3.5,Deploy an OpenAI-compatible inference endpoint,tracker/issues/P10-07.md
+P10-08,10,Week 23,experiment,false,5.0,"Benchmark TTFT, TPOT, throughput and concurrency",tracker/issues/P10-08.md
+P10-09,10,Week 23,concept,false,2.0,Secure LoRA adapters and serving management,tracker/issues/P10-09.md
+P10-10,10,Week 23,gate,false,2.0,Phase 10 serving acceptance gate,tracker/issues/P10-10.md
+P11-01,11,Week 24,concept,false,2.0,Finalize capstone hypothesis and success criteria,tracker/issues/P11-01.md
+P11-02,11,Week 24,lab,false,3.5,Curate final model/data/license cards,tracker/issues/P11-02.md
+P11-03,11,Week 24,experiment,false,5.0,Reproduce B0 prompted baseline from clean state,tracker/issues/P11-03.md
+P11-04,11,Week 24,experiment,false,5.0,Reproduce B1 SFT and matched ablations,tracker/issues/P11-04.md
+P11-05,11,Week 24,experiment,false,5.0,Reproduce B2 offline preference alignment,tracker/issues/P11-05.md
+P11-06,11,Week 24,experiment,false,5.0,Reproduce B3 bounded online RL branch,tracker/issues/P11-06.md
+P11-07,11,Week 24,experiment,false,5.0,Consolidate independent evaluation and uncertainty,tracker/issues/P11-07.md
+P11-08,11,Week 24,lab,false,3.5,Package inference interface and artifact integrity,tracker/issues/P11-08.md
+P11-09,11,Week 24,concept,false,2.0,Write research-style final technical report,tracker/issues/P11-09.md
+P11-10,11,Week 24,gate,false,2.0,Final portfolio review and retrospective,tracker/issues/P11-10.md
