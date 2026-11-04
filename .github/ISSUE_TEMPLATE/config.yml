@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Full course syllabus
+    url: https://github.com/Aragami007/llm-post-training-engineering/blob/main/SYLLABUS.md
+    about: Read the full phase requirements before adding additional topics.
