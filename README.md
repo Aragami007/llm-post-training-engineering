@@ -2,7 +2,7 @@
 
 > A **24-week, experiment-first curriculum** for learning the mathematics, data engineering, evaluation, SFT, preference optimization, online RL, distributed training and inference systems behind post-training text LLMs.
 
-**Status:** Course workspace prepared. Topic issues are supplied in `tracker/` and can be published to GitHub using the setup scripts. This README does **not** claim the GitHub issues have already been created.
+**Status:** Published to the private GitHub repository. All **133 topic issues** have been created on GitHub and the course sources are committed. Phase milestone synchronization is managed by `.github/workflows/publish-course-tracker.yml`.
 
 [Read the full syllabus](SYLLABUS.md) · [Start here](docs/START_HERE.md) · [All 133 topic issues](docs/ISSUE_INDEX.md) · [Evaluation protocol](docs/EVALUATION_PROTOCOL.md) · [Capstone](docs/CAPSTONE.md) · [GitHub publishing](docs/GITHUB_PUBLISHING.md)
 
@@ -60,7 +60,7 @@ Each course subtopic is **one issue** with a stable topic ID (e.g., `P03-06`) an
 - A measurable **acceptance test** and completion comment.
 - Suggested dependencies, reading, phase/week and estimated hours.
 
-Labels distinguish phase, issue kind, core/stretch and compute requirements. Twelve GitHub milestones map to the twelve syllabus phases. Each phase ends with a **gate issue**; pass the gate before advancing. GitHub Issues remain the source of truth for open/closed status after publication; `docs/PROGRESS.md` begins as a local, not-live snapshot.
+Labels distinguish phase, issue kind, core/stretch and compute requirements. Twelve phase milestones are specified by the tracker publishing workflow; verify their live assignment in the GitHub Milestones view. Each phase ends with a **gate issue**; pass the gate before advancing. GitHub Issues remain the source of truth for open/closed status after publication; `docs/PROGRESS.md` begins as a local, not-live snapshot.
 
 **Close issues on evidence, not on having watched a tutorial.** A rigorous negative result qualifies if it is reproducible and correctly interpreted.
 
