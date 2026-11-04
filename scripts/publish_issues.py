@@ -58,7 +58,7 @@ def preflight(repo):
     cmd(['gh','repo','view',repo,'--json','nameWithOwner'])
 
 def existing_issues(repo):
-    rows = gh_json(['issue','list','--repo',repo,'--state','all','--limit','1000','--json','number,title,body,state,url'])
+    rows = gh_json(['issue','list','--repo',repo,'--state','all','--limit','1000','--json','number,title,body,state,url,milestone'])
     found = {}
     for x in rows:
         match = re.search(r'<!-- course-topic-id: (P\d{2}-\d{2}) -->', x.get('body') or '')
@@ -155,8 +155,14 @@ def main():
     created=0; skipped=0
     for t in topics:
         if t['id'] in before:
+            old_issue = before[t['id']]
+            milestone_name = next(p['milestone'] for p in phases if p['id'] == t['phase'])
+            if not old_issue.get('milestone') or old_issue['milestone'].get('title') != milestone_name:
+                cmd(['gh','api','--method','PATCH',f'repos/{args.repo}/issues/{old_issue["number"]}',
+                     '-F',f'milestone={milestones[milestone_name]}'])
+                print(f'SYNC {t["id"]} — assigned milestone to #{old_issue["number"]}')
             skipped+=1
-            print(f'SKIP {t["id"]} — existing #{before[t["id"]]["number"]}')
+            print(f'SKIP {t["id"]} — existing #{old_issue["number"]}')
             continue
         if args.limit is not None and created >= args.limit:
             break
